@@ -57,11 +57,11 @@ export default function FAQPage() {
     <div className="bg-yellow-100 min-h-screen py-12">
       <main className="max-w-4xl mx-auto px-6">
         {/* Title with animated hen */}
-        <div className="flex items-center justify-center gap-6 mb-16 pt-6">
-          <h1 className="text-blue-600 text-6xl md:text-7xl font-extrabold leading-tight select-none">
+        <div className="flex items-center justify-center gap-6 mb-16 pt-20">
+          <h1 className="text-blue-500 text-6xl md:text-7xl font-extrabold leading-tight select-none  drop-shadow-lg">
             Facts about Eggs
           </h1>
-          <div className="relative w-32 h-32 select-none">
+          <div className="relative w-32 h-32 select-none drop-shadow-lg">
             {activeImage === 0 ? (
               <img
                 src="/hen_standing.svg"
@@ -88,7 +88,7 @@ export default function FAQPage() {
               <button
                 onClick={() => toggle(index)}
                 aria-expanded={openStates[index]}
-                className={`w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-3 py-2
+                className={`w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-red-400 rounded px-3 py-2
                   ${openStates[index] ? "text-red-600" : "text-blue-500"}
                   hover:bg-blue-50
                 `}
