@@ -12,7 +12,7 @@ export default function NavBar() {
         <div className="w-full flex flex-row">
           <NavButton name="Home" route=""></NavButton>
           <NavButton name="About" route=""></NavButton>
-          <NavButton name="FAQ" route=""></NavButton>
+          <NavButton name="FAQ" route="faq"></NavButton>
           <NavButton name="Contact Us" route=""></NavButton>
         </div>
       </div>
