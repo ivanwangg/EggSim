@@ -2,7 +2,7 @@ import NavButton from "./navButton";
 
 export default function NavBar() {
   return (
-    <div className="w-full h-[5rem] flex flex-col bg-red-400 top-0 fixed">
+    <nav className="w-full h-[5rem] flex flex-col bg-red-400 top-0 fixed">
       <div className="w-full h-full flex flex-row items-center pl-20">
         <p className="w-full font-bold text-2xl text-white">
           EggSim
