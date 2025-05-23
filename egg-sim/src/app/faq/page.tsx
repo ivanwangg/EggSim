@@ -54,11 +54,11 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="bg-yellow-100 min-h-screen py-12">
+    <div className="bg-[#FFFBF0] min-h-screen py-12">
       <main className="max-w-4xl mx-auto px-6">
         {/* Title with animated hen */}
         <div className="flex items-center justify-center gap-6 mb-16 pt-20">
-          <h1 className="text-blue-500 text-6xl md:text-7xl font-extrabold leading-tight select-none  drop-shadow-lg">
+          <h1 className="text-[#FBBF24] text-6xl md:text-7xl font-extrabold leading-tight select-none drop-shadow-lg">
             Facts about Eggs
           </h1>
           <div className="relative w-32 h-32 select-none drop-shadow-lg">
@@ -83,21 +83,21 @@ export default function FAQPage() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-green-50 rounded-lg shadow-md p-6 border-l-4 border-blue-500 hover:shadow-lg transition-shadow duration-300"
+              className="bg-white rounded-lg shadow-md p-6 border-l-4 border-[#FBBF24] hover:shadow-lg transition-shadow duration-300"
             >
               <button
                 onClick={() => toggle(index)}
                 aria-expanded={openStates[index]}
-                className={`w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-red-400 rounded px-3 py-2
-                  ${openStates[index] ? "text-red-600" : "text-blue-500"}
-                  hover:bg-blue-50
+                className={`w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-[#D97706] rounded px-3 py-2
+                  ${openStates[index] ? "text-[#D97706]" : "text-[#8B5E3C]"}
+                  hover:bg-[#FFF7E6]
                 `}
               >
                 <span className="text-2xl font-semibold leading-snug">
                   {faq.question}
                 </span>
                 <span
-                  className={`text-blue-600 transition-transform duration-300 ease-in-out transform ${
+                  className={`transition-transform duration-300 ease-in-out transform ${
                     openStates[index] ? "rotate-90 scale-125" : "scale-100"
                   }`}
                 >
@@ -106,7 +106,7 @@ export default function FAQPage() {
               </button>
 
               <ul
-                className={`list-disc list-inside mt-4 text-gray-700 italic leading-relaxed max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in-out ${
+                className={`list-disc list-inside mt-4 text-[#333333] italic leading-relaxed max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in-out ${
                   openStates[index] ? "max-h-96" : ""
                 }`}
               >
