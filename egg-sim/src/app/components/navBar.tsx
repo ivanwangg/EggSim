@@ -12,7 +12,7 @@ export default function NavBar() {
           EggSim
         </p>
         <div className="w-full flex flex-row">
-          <NavButton name="Home" route="">/home</NavButton>
+          <NavButton name="Home" route="/home"></NavButton>
           <NavButton name="About" route="/about"></NavButton>
           <NavButton name="FAQ" route="/faq"></NavButton>
           <NavButton name="Contact Us" route="/contact"></NavButton>
