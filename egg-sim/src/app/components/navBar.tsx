@@ -1,6 +1,10 @@
+'use client'
+import { useState } from "react";
 import NavButton from "./navButton";
 
 export default function NavBar() {
+
+
   return (
     <div className="w-full h-[5rem] flex flex-col bg-red-400 top-0 fixed">
       <div className="w-full h-full flex flex-row items-center pl-20">
@@ -9,11 +13,11 @@ export default function NavBar() {
         </p>
         <div className="w-full flex flex-row">
           <NavButton name="Home" route=""></NavButton>
-          <NavButton name="About" route="about"></NavButton>
-          <NavButton name="FAQ" route="faq"></NavButton>
-          <NavButton name="Contact Us" route=""></NavButton>
+          <NavButton name="About" route="/about"></NavButton>
+          <NavButton name="FAQ" route="/faq"></NavButton>
+          <NavButton name="Contact Us" route="/contact"></NavButton>
         </div>
       </div>
-    </nav>
+    </div>
   );
 }
