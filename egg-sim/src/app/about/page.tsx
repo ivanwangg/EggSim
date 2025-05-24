@@ -2,10 +2,10 @@
 export default function AboutPage() {
 
   return (
-    <div className="w-full h-full flex flex-col items-center bg-blue-300 overflow-auto">
+    <div className="w-full h-full flex flex-col items-center bg-[#FFFBF0] overflow-auto">
       <div className="w-3/4 h-full flex flex-row my-20">
         <div className="w-full h-1/2 flex flex-col items-center">
-          <p className="font-bold text-white text-3xl mb-5">
+          <p className="font-bold text-[#FBBF24] text-3xl mb-5">
             Why this website?
           </p>
           <p>
@@ -25,7 +25,7 @@ export default function AboutPage() {
           insert image here
         </div>
         <div className="w-full h-1/2 flex flex-col items-center">
-          <p className="font-bold text-white text-3xl mb-5">
+          <p className="font-bold text-[#FBBF24] text-3xl mb-5">
             Our Motivations
           </p>
           <p>
