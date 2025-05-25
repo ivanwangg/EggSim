@@ -3,14 +3,27 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { useXP } from '../context/XPContext';
+import XPBar from '../components/xpBar';
+
 export default function HomePage() {
+
+  const router = useRouter();
+
   const [animationStarted, setAnimationStarted] = useState(false);
   const [eggVisible, setEggVisible] = useState(false);
   const [eggClicked, setEggClicked] = useState(false);
   const [eggAnimationFinished, setEggAnimationFinished] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
-  const router = useRouter();
+  const { currentXP, maxXP, level, setCurrentXP, setCurrentLevel } = useXP();
+
+  const gainXP = (val: number) => {
+    if (currentXP + val >= 100) {
+      setCurrentLevel(level + 1);
+    }
+    setCurrentXP((currentXP + val) % maxXP);
+  }
 
   const handleClick = () => {
     if (!animationStarted) {
@@ -44,6 +57,10 @@ export default function HomePage() {
 
   return (
     <div className="relative w-full h-screen overflow-x-hidden" style={{ backgroundImage: 'url(/farm_background.svg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', minHeight: '100vh',}}>
+      <XPBar></XPBar>
+      {/* <button className="absolute mt-[5rem] w-[10rem] h-[5rem] bg-red-500" onClick={() => gainXP(10)}>
+        click me
+      </button> */}
       {/* Nest (Initial image of the hen nesting) */}
       <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2">
         <img
