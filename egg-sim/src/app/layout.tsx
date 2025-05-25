@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/navBar";
@@ -13,9 +12,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
 export const metadata: Metadata = {
   title: "Egg Simulator",
   description: "Created by Ivan Wang, Evan Lin, and Jayden Chen",
+
 };
 
 export default function RootLayout({
@@ -25,10 +26,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Add the Google Font for Press Start 2P */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
       >
-        <NavBar></NavBar>
+        <NavBar />
         <main className="flex-1 overflow-auto mt-[5rem]">
           {children}
         </main>
