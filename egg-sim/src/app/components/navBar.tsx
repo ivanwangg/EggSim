@@ -1,5 +1,4 @@
 'use client'
-import { useState } from "react";
 import NavButton from "./navButton";
 
 export default function NavBar() {

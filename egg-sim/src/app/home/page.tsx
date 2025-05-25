@@ -1,105 +1,121 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
   const [animationStarted, setAnimationStarted] = useState(false);
-  const [position, setPosition] = useState(50); // starting at center
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [nestImage, setNestImage] = useState("/hen_nesting.svg");
+  const [eggVisible, setEggVisible] = useState(false);
+  const [eggClicked, setEggClicked] = useState(false);
+  const [eggAnimationFinished, setEggAnimationFinished] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
 
-  const lastImageChangeTime = useRef<number>(0); // track last image change time
-  const animationRef = useRef<number | null>(null); // track animation id
-  const svgFiles = [
-    '/hen_walking0.svg',
-    '/hen_walking1.svg',
-    '/hen_walking2.svg',
-    '/hen_walking3.svg',
-    '/hen_walking4.svg',
-    '/hen_walking5.svg',
-    '/hen_walking6.svg',
-    '/hen_walking7.svg',
-  ];
+  const router = useRouter();
 
   const handleClick = () => {
     if (!animationStarted) {
-      setAnimationStarted(true); // start animation when clicked
-      setNestImage("/nest.svg"); // change hen_nesting.svg to nest.svg when hen walking animation triggered
+      setAnimationStarted(true); // trigger animation on click
+    }
+  };
+
+  const handleEggClick = () => {
+    setEggClicked(true);
+    setTimeout(() => {
+      setEggAnimationFinished(true);
+      setShowOptions(true);
+    }, 2500); // delay for rising/enlarging animation
+  };
+
+  const handleOptionClick = (option: string) => {
+    if (option === 'boil') {
+      router.push('/boil');
+    } else {
+      router.push('/fry');
     }
   };
 
   useEffect(() => {
     if (animationStarted) {
-      const animate = (timestamp: number) => {
-        // move hen to the right
-        setPosition((prev) => prev + 8);
-
-        // cycle walking images
-        if (timestamp - lastImageChangeTime.current >= 70) {
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % svgFiles.length); // cycle images
-          lastImageChangeTime.current = timestamp;
-        }
-
-        // stop animation when hen goes off-screen
-        if (position >= 100) {
-          cancelAnimationFrame(animationRef.current!);
-          return;
-        }
-
-        // continue animation if hen hasn't reached the end
-        animationRef.current = requestAnimationFrame(animate);
-      };
-
-      // start the animation
-      animationRef.current = requestAnimationFrame(animate);
-
-      // clean up function
-      return () => {
-        if (animationRef.current) {
-          cancelAnimationFrame(animationRef.current);
-        }
-      };
+      setTimeout(() => {
+        setEggVisible(true); // have egg appear roughly after time hen moves off screen
+      }, 4500); // roughly the time hen is gone
     }
-  }, [animationStarted, position]);
+  }, [animationStarted]);
 
   return (
-    <div className="relative w-full h-screen overflow-x-hidden bg-sky-400">
-      {/* Sky */}
-      <div className="absolute top-0 left-0 w-full h-[70%] bg-sky-400"></div>
-
-      {/* Ground */}
-      <div className="absolute bottom-0 left-0 w-full h-[30%] bg-green-500"></div>
-
-      {/* Nest */}
+    <div className="relative w-full h-screen overflow-x-hidden" style={{ backgroundImage: 'url(/farm_background.svg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', minHeight: '100vh',}}>
+      {/* Nest (Initial image of the hen nesting) */}
       <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2">
         <img
-          src={nestImage} // either hen_nesting.svg or nest.svg
+          src={animationStarted ? '/nest.svg' : '/hen_nesting.svg'} // change to hen_nesting initially and to nest when animation starts
           alt="Nest"
-          className="transition-all duration-1000 drop-shadow-[2px_2px_0px_rgba(0,0,0,0.6)]"
-          onClick={handleClick} // trigger animation on click
-          style={{
-            width: '100px', 
-            zIndex: 1, 
-          }}
+          className="transition-all duration-1000 drop-shadow-lg"
+          onClick={handleClick}
+          style={{ width: '100px', zIndex: 1 }}
         />
       </div>
 
-      {/* Hen walking*/}
+      {/* Hen walking animation */}
       {animationStarted && (
-        <div onClick={handleClick} className="cursor-pointer">
+        <div className="walking-hen" />
+      )}
+
+      {/* Egg (Appears after hen walks off screen) */}
+      {eggVisible && !eggClicked && (
+        <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2 transition-all duration-500">
           <img
-            src={svgFiles[currentIndex]} 
-            alt={`Hen walking animation ${currentIndex}`}
-            className="transition-all duration-1000 drop-shadow-[2px_2px_0px_rgba(0,0,0,0.6)]"
+            src="/egg.svg"
+            alt="Egg"
+            className="transition-all duration-1000 drop-shadow-lg"
             style={{
-              left: `${position}%`, 
-              width: '100px',
-              zIndex: 2, 
-              position: 'absolute',
-              top: '70%', 
-              transform: `translateX(-50%) translate(-9px, 8px)`, // shift hen 9px left and 8px down diagonally
+              width: '60px',
+              zIndex: 3,
+              animation: 'jumpLand 1.5s ease-out',
+              transform: `translateX(-50%) translate(31px, 20px)`,
             }}
+            onClick={handleEggClick}
           />
+        </div>
+      )}
+
+      {/* Egg rising animation */}
+      {eggClicked && !eggAnimationFinished && (
+        <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2" style={{ zIndex: 4, animation: 'slideUp 2s ease-out forwards' }}>
+          <img
+            src="/egg.svg"
+            alt="Egg Rising"
+            className="transition-all duration-1000 drop-shadow-lg"
+            style={{ width: '70px' }}
+          />
+        </div>
+      )}
+
+      {/* Egg enlarging animation */}
+      {eggClicked && eggAnimationFinished && (
+        <div className="absolute top-[30%] left-[50%] transform -translate-x-1/2" style={{ zIndex: 4, animation: 'enlarge 2s ease-in-out forwards', animationIterationCount: 'infinite', animationDirection: 'alternate' }}>
+          <img
+            src="/egg.svg"
+            alt="Egg Enlarging"
+            className="transition-all duration-1000 drop-shadow-lg"
+            style={{ width: '100px' }}
+          />
+        </div>
+      )}
+
+      {/* Show options after egg animation finishes */}
+      {eggAnimationFinished && showOptions && (
+        <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 space-y-8">
+          <h2 className="text-2xl text-white font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text" style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.7)' }}>
+            What do you want to do with the egg?
+          </h2>
+          <div className="space-x-100">
+            <button onClick={() => handleOptionClick('boil')} className="bg-blue-600 text-white p-4 rounded-lg shadow-xl transition-all duration-300 transform hover:scale-110 hover:rotate-2 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 animate__animated animate__bounceIn animate__delay-2s boil-button pixelated-text" style={{ width: '250px' }}>
+              Boil It 🥚
+            </button>
+            <button onClick={() => handleOptionClick('fry')} className="bg-yellow-600 text-white p-4 rounded-lg shadow-xl transition-all duration-300 transform hover:scale-110 hover:rotate-[-2deg] hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-yellow-300 animate__animated animate__bounceIn animate__delay-2s fry-button pixelated-text" style={{ width: '250px' }}>
+              Fry It 🍳
+            </button>
+          </div>
         </div>
       )}
     </div>
