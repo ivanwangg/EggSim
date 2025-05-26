@@ -2,6 +2,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/navBar";
 import ClientProvider from "./ClientProvider";
+import { Metadata } from "next";
+import ScrollManager from "./components/scrollManager";  // Import the ScrollManager component
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,11 +15,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
 export const metadata: Metadata = {
   title: "Egg Simulator",
   description: "Created by Ivan Wang, Evan Lin, and Jayden Chen",
-
 };
 
 export default function RootLayout({
@@ -25,22 +25,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <head>
-        {/* Add the Google Font for Press Start 2P */}
         <link
           href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
-      >
-        <NavBar></NavBar>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}>
+        <NavBar />
         <ClientProvider>
-          <main className="flex-1 overflow-auto mt-[5rem]">
-            {children}
+          <ScrollManager /> 
+          <main className="flex-1 mt-[5rem]">
+            {children}  
           </main>
         </ClientProvider>
       </body>

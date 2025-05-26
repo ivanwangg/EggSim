@@ -9,6 +9,8 @@ export default function HomePage() {
   const [eggClicked, setEggClicked] = useState(false);
   const [eggAnimationFinished, setEggAnimationFinished] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [eggJumpFinished, setEggJumpFinished] = useState(false); 
+  const [showPrompt, setShowPrompt] = useState(false); 
 
   const router = useRouter();
 
@@ -42,8 +44,34 @@ export default function HomePage() {
     }
   }, [animationStarted]);
 
+  // delay instructions appearing
+  useEffect(() => {
+    setTimeout(() => {
+      setShowPrompt(true); 
+    }, 1000); //  appears after 1 second
+  }, []);
+
+  const handleEggJumpAnimationEnd = () => {
+    setEggJumpFinished(true); 
+  };
+
   return (
-    <div className="relative w-full h-screen overflow-x-hidden" style={{ backgroundImage: 'url(/farm_background.svg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', minHeight: '100vh',}}>
+    <div className="relative w-full h-screen overflow-x-hidden" style={{ backgroundImage: 'url(/farm_background_2.svg)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '100vh' }}>
+      
+      {/* Step 1  - Only visible before hen is clicked */}
+      {!animationStarted && showPrompt && (
+        <div className="absolute top-[20%] left-[50%] transform -translate-x-1/2 text-white text-2xl font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text glow-effect bounce-effect">
+          <p>Step 1: Click the chicken to begin!</p>
+        </div>
+      )}
+
+      {/* Step 2  - Only visible after the egg jump animation is finished */}
+      {eggVisible && !eggClicked && eggJumpFinished && showPrompt && (
+        <div className="absolute top-[20%] left-[50%] transform -translate-x-1/2 text-white text-2xl font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text glow-effect bounce-effect animate__delay-2s">
+          <p>Step 2: Click the egg!</p>
+        </div>
+      )}
+
       {/* Nest (Initial image of the hen nesting) */}
       <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2">
         <img
@@ -74,6 +102,7 @@ export default function HomePage() {
               transform: `translateX(-50%) translate(31px, 20px)`,
             }}
             onClick={handleEggClick}
+            onAnimationEnd={handleEggJumpAnimationEnd} // Set the flag when the jump animation ends
           />
         </div>
       )}
@@ -105,14 +134,24 @@ export default function HomePage() {
       {/* Show options after egg animation finishes */}
       {eggAnimationFinished && showOptions && (
         <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 space-y-8">
-          <h2 className="text-2xl text-white font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text" style={{ textShadow: '2px 2px 6px rgba(0, 0, 0, 0.7)' }}>
+          <h2
+            className="text-2xl text-white font-semibold animate__animated animate__fadeIn animate__delay-2s pixelated-text glow-effect animate__bounce"
+          >
             What do you want to do with the egg?
           </h2>
           <div className="space-x-100">
-            <button onClick={() => handleOptionClick('boil')} className="bg-blue-600 text-white p-4 rounded-lg shadow-xl transition-all duration-300 transform hover:scale-110 hover:rotate-2 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 animate__animated animate__bounceIn animate__delay-2s boil-button pixelated-text" style={{ width: '250px' }}>
+            <button
+              onClick={() => handleOptionClick('boil')}
+              className="bg-blue-600 text-white p-4 rounded-lg shadow-xl transition-all duration-300 transform hover:scale-110 hover:rotate-2 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-300 animate__animated animate__zoomIn boil-button pixelated-text pop-in"
+              style={{ width: '250px' }}
+            >
               Boil It 🥚
             </button>
-            <button onClick={() => handleOptionClick('fry')} className="bg-yellow-600 text-white p-4 rounded-lg shadow-xl transition-all duration-300 transform hover:scale-110 hover:rotate-[-2deg] hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-yellow-300 animate__animated animate__bounceIn animate__delay-2s fry-button pixelated-text" style={{ width: '250px' }}>
+            <button
+              onClick={() => handleOptionClick('fry')}
+              className="bg-yellow-600 text-white p-4 rounded-lg shadow-xl transition-all duration-300 transform hover:scale-110 hover:rotate-[-2deg] hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-yellow-300 animate__animated animate__zoomIn  fry-button pixelated-text pop-in"
+              style={{ width: '250px' }}
+            >
               Fry It 🍳
             </button>
           </div>
