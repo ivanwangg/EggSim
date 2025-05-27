@@ -35,6 +35,7 @@ body {
 
 .pixelated-text {
   font-family: 'Press Start 2P', sans-serif;
+  color: #FFFFFF;
 }
 
 .bg-faq {
@@ -209,7 +210,15 @@ button:hover {
   text-shadow: 0 0 2px rgba(255, 210, 0, 0.5), 0 0 4px rgba(255, 180, 0, 0.6), 0 0 6px rgba(255, 140, 0, 0.7);
   animation: glow-animation 2s infinite alternate;
 }
+/* blue glow effect */
+.glow-effect2 {
+  text-shadow: 0 0 2px rgba(135, 206, 235, 0.5), 0 0 4px rgba(100, 149, 237, 0.6), 0 0 6px rgba(70, 130, 180, 0.7);
+  animation: glow-animation2 2s infinite alternate;
+}
 
+
+
+/* yellow */
 @keyframes glow-animation {
   0% {
     text-shadow: 0 0 2px rgba(255, 210, 0, 0.5), 0 0 4px rgba(255, 180, 0, 0.6), 0 0 6px rgba(255, 140, 0, 0.7);
@@ -218,7 +227,15 @@ button:hover {
     text-shadow: 0 0 3px rgba(255, 210, 0, 0.6), 0 0 5px rgba(255, 180, 0, 0.7), 0 0 8px rgba(255, 140, 0, 0.8);
   }
 }
-
+/* blue */
+@keyframes glow-animation2{
+   0% {
+    text-shadow: 0 0 2px rgba(135, 206, 235, 0.5), 0 0 4px rgba(100, 149, 237, 0.6), 0 0 6px rgba(70, 130, 180, 0.7);
+  }
+  100% {
+    text-shadow: 0 0 3px rgba(135, 206, 235, 0.6), 0 0 5px rgba(100, 149, 237, 0.7), 0 0 8px rgba(70, 130, 180, 0.8);
+  }
+}
 
 
 .bounce-effect {
@@ -246,4 +263,113 @@ button:hover {
   100% {
     transform: scale(1); /* end at normal size */
   }
+}
+
+
+@keyframes poofIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.poof-in {
+  animation: poofIn 0.6s ease-out forwards;
+}
+
+
+
+.zoom-in-out{
+  animation: zoomInOut 2s infinite ease-out forwards;
+}
+
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05); 
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; 
+  }
+  100% {
+    opacity: 1; 
+  }
+}
+
+
+
+.fadeIn{
+  animation: fade-in 1s forwards;
+}
+
+
+@keyframes egg-slide-down {
+  0% {
+    transform: translateY(-2000%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(60px);
+    opacity: 1;
+  }
+}
+
+.egg-slide {
+  animation: egg-slide-down 2s ease-out forwards, fade-in 3s ease-out;
+}
+
+
+
+.step1-prompt {
+  animation: fade-in .2s ease-out forwards;
+}
+
+
+
+
+/* ignore below, im thinking of implementing a glow effect for the items, like when you find an item in a game, but I'm not too sure if I actually want to use this */
+@keyframes pulseGlow {
+0%, 100% {
+  box-shadow: 0 0 10px 5px rgba(255, 215, 0, 0.6);
+  filter: blur(3px);
+}
+50% {
+  box-shadow: 0 0 20px 10px rgba(255, 165, 0, 1);
+  filter: blur(6px);
+  }
+}
+
+.glowing-halo {
+  position: relative;
+  display: inline-block;
+}
+
+.glowing-halo::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 223, 0, 0.6), transparent 70%);
+  animation: pulseGlow 3s ease-in-out infinite;
+  filter: blur(10px);
+  z-index: -1;
 }
