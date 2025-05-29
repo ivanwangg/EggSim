@@ -1,9 +1,11 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Metadata } from "next";
 import "./globals.css";
 import NavBar from "./components/navBar";
 import ClientProvider from "./ClientProvider";
 import { Metadata } from "next";
 import ScrollManager from "./components/scrollManager";  // Import the ScrollManager component
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
