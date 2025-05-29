@@ -5,7 +5,7 @@ export default function NavBar() {
 
 
   return (
-    <div className="w-full h-[5rem] flex flex-col bg-[#C89F77] top-0 fixed">
+    <div className="w-full h-[5rem] flex flex-col bg-[#C89F77] top-0 fixed z-50">
       <div className="w-full h-full flex flex-row items-center pl-20">
         <p className="w-full font-bold text-2xl text-white">
           EggSim
