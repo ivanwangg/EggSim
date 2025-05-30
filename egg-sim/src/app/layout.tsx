@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import "./globals.css";
 import NavBar from "./components/navBar";
 import ClientProvider from "./ClientProvider";
-import { Metadata } from "next";
 import ScrollManager from "./components/scrollManager";  // Import the ScrollManager component
 
 
