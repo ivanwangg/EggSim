@@ -1,4 +1,5 @@
 import {useState, useEffect } from "react";
+import { useInventory } from "../context/InventoryContext";
 
 interface InventoryProps {
   onClose: () => void;
@@ -7,6 +8,7 @@ interface InventoryProps {
 export default function Inventory({ onClose }: InventoryProps) {
 
   const [isVisible, setVisible] = useState(false);
+  const { items, removeItem } = useInventory();
   
   useEffect(() => {
     setVisible(true);
@@ -45,10 +47,27 @@ export default function Inventory({ onClose }: InventoryProps) {
 
           </div>
         </div>
-        <div className="w-full h-full flex flex-wrap justify-start items-start border-3 rounded-lg pl-[3rem] pt-[3rem] bg-green-300">
-          <div className="w-[7rem] h-[7rem] border-2 rounded-lg border-red-400 m-2">
-
-          </div>
+        <div className="w-full h-full flex flex-wrap justify-center items-center border-3 rounded-lg pt-7 content-start overflow-auto bg-green-300">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="relative w-[7rem] h-[7rem] border-2 rounded-lg border-red-400 m-2 flex justify-center items-center bg-white"
+            >
+              <button
+                onClick={() => removeItem(item.id)}
+                className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex justify-center items-center text-xs hover:bg-red-800"
+                title="Remove item"
+              >
+                X
+              </button>
+              <img
+                src={item.icon}
+                alt={item.name}
+                title={item.name}
+                className="w-[80%] h-[80%] object-contain"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

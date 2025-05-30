@@ -6,7 +6,7 @@ export default function NotFound() {
   const router = useRouter();
 
   const frames = Array.from({ length: 19 }, (_, index) =>
-    `/rooster_crying${index.toString().padStart(2, '0')}.svg`
+    `not-found-page/rooster_crying${index.toString().padStart(2, '0')}.svg`
   );
 
   const [frameIndex, setFrameIndex] = useState(0);
