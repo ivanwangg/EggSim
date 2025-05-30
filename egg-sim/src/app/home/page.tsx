@@ -3,7 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { useXP } from '../context/XPContext';
+import XPBar from '../components/xpBar';
+
 export default function HomePage() {
+
+  const router = useRouter();
+
   const [animationStarted, setAnimationStarted] = useState(false);
   const [eggVisible, setEggVisible] = useState(false);
   const [eggClicked, setEggClicked] = useState(false);
@@ -12,7 +18,14 @@ export default function HomePage() {
   const [eggJumpFinished, setEggJumpFinished] = useState(false); 
   const [showPrompt, setShowPrompt] = useState(false); 
 
-  const router = useRouter();
+  const { currentXP, maxXP, level, setCurrentXP, setCurrentLevel } = useXP();
+
+  const gainXP = (val: number) => {
+    if (currentXP + val >= 100) {
+      setCurrentLevel(level + 1);
+    }
+    setCurrentXP((currentXP + val) % maxXP);
+  }
 
   const handleClick = () => {
     if (!animationStarted) {
@@ -57,7 +70,10 @@ export default function HomePage() {
 
   return (
     <div className="relative w-full h-screen overflow-x-hidden" style={{ backgroundImage: 'url(/farm_background_2.svg)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '100vh' }}>
-      
+      <XPBar></XPBar>
+      {/* <button className="absolute mt-[5rem] w-[10rem] h-[5rem] bg-red-500" onClick={() => gainXP(10)}>
+        click me
+      </button> */}
       {/* Step 1  - Only visible before hen is clicked */}
       {!animationStarted && showPrompt && (
         <div className="absolute top-[20%] left-[50%] transform -translate-x-1/2 text-white text-2xl font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text glow-effect bounce-effect">
@@ -71,7 +87,6 @@ export default function HomePage() {
           <p>Step 2: Click the egg!</p>
         </div>
       )}
-
       {/* Nest (Initial image of the hen nesting) */}
       <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2">
         <img
