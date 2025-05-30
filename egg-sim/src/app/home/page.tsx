@@ -113,7 +113,7 @@ export default function HomePage() {
             style={{
               width: '60px',
               zIndex: 3,
-              animation: 'jumpLand 1.5s ease-out',
+              animation: 'jumpLand 1.5s ease-out forwards',
               transform: `translateX(-50%) translate(31px, 20px)`,
             }}
             onClick={handleEggClick}
