@@ -14,15 +14,18 @@ export default function XPBar() {
           {level}
         </p>
       </div>
-      <div className="relative w-[20rem] flex flex-row h-6 border-green-300 border-4 bg-green-200 overflow-hidden -ml-9">
-        <div
-          className="w-full bg-green-400 h-full transition-all duration-500 ease-in-out"
-          style={{ width: `${percentage}%` }}
-        />
-        <p className="absolute inset-0 flex items-center justify-center font-medium text-sm text-black">
-          XP: {currentXP} / {maxXP}
-        </p>
+      <div className="relative w-[20rem] flex flex-row h-6 bg-gradient-to-b from-green-200 to-green-300 border-b-4 border-green-500 rounded-lg overflow-hidden -ml-9">
+        <div className="w-full border-2 border-green-500 rounded-md overflow-hidden">
+          <div
+            className="h-full transition-all duration-500 ease-in-out bg-gradient-to-r from-green-300 to-green-400"
+            style={{ width: `${percentage}%` }}
+          />
+          <p className="absolute inset-0 flex items-center justify-center font-semibold text-sm text-black">
+            XP: {currentXP} / {maxXP}
+          </p>
+        </div>
       </div>
+
     </div>
   );
 }

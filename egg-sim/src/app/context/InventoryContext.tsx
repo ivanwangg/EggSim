@@ -6,7 +6,7 @@ import { useEffect } from "react";
 interface InventoryContextProps {
   items: Item[];
   addItem: (item: Item) => void;
-  removeItem: (id: number) => void;
+  removeItem: (id: string) => void;
 }
 
 const InventoryContext = createContext<InventoryContextProps | undefined>(undefined);
@@ -22,7 +22,7 @@ export function InventoryProvider({ children }: InventoryProviderProps) {
     setItems(prev => [...prev, item]);
   }
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string) => {
     setItems(prev => prev.filter(item => item.id !== id));
   };
 
