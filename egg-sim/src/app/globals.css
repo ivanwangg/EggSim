@@ -427,3 +427,119 @@ button:hover {
   box-shadow: 0 0 15px rgba(255, 140, 0, 1);
 }
 
+@keyframes egg-slam {
+  0% {
+    transform: translateY(-200%) scaleY(1) scaleX(1);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(20%) scaleY(1.2) scaleX(0.9);
+    opacity: 1;
+  }
+  85% {
+    transform: translateY(0%) scaleY(0.9) scaleX(1.1);
+  }
+  100% {
+    transform: translateY(0%) scaleY(1) scaleX(1);
+  }
+}
+
+.animate-egg-slam {
+  animation: egg-slam 0.6s ease-out forwards;
+}
+
+
+@keyframes egg-poof-out {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.7) rotate(-10deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2) rotate(10deg);
+  }
+}
+
+
+.egg-poof-out {
+  animation: egg-poof-out 0.5s ease-out forwards;
+}
+
+@keyframes eggCycle {
+  0% {
+    background-image: url('/fry/egg_cracked_raw.svg');
+  }
+  10% {
+    background-image: url('/fry/raw_egg_falling.svg');
+  }
+  25%{
+    background-image: url('/fry/raw_egg_falling_v2.svg');
+  }
+  45%{
+    background-image: url('/fry/raw_egg_falling_v2.svg');
+    transform: translateY(0);
+  }
+  55%{
+    background-image: url('/fry/raw_egg_falling_v2.svg');
+    transform: translateY(30px);
+  }
+  65%{
+    background-image: url('/fry/raw_egg_falling_v2.svg');
+    transform: translateY(40px);
+  }
+  75%{
+    background-image: url('/fry/raw_egg_falling_v2.svg');
+    transform: translateY(50px);
+  }
+  85%{
+    background-image: url('/fry/raw_egg_falling_v2.svg');
+    transform: translateY(60px);
+  }
+  100%{
+    background-image: url('/fry/raw_egg_falling_v2.svg');
+    opacity: 0;
+  }
+}
+
+.animated-egg-sequence {
+  width: 5rem; 
+  height: 5rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: eggCycle 1s steps(1) forwards;
+  transition: background-position 0.5s ease-out
+}
+
+@keyframes oilPourCycle {
+  0%   { 
+    background-image: url('/fry//oil_bottle_pouring0.svg'); 
+  }
+  20%  { 
+    background-image: url('/fry/oil_bottle_pouring1.svg'); 
+  }
+  40%  { 
+    background-image: url('/fry/oil_bottle_pouring2.svg'); 
+  }
+  60%  { 
+    background-image: url('/fry/oil_bottle_pouring3.svg'); 
+  }
+  80%  { 
+    background-image: url('/fry/oil_bottle_pouring4.svg'); 
+  }
+  100% { 
+    background-image: url('/fry/oil_bottle_pouring4.svg');
+  }
+}
+
+.oil-pour-animation {
+  width: 160px; 
+  height: 160px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  animation: oilPourCycle 1.5s steps(5) forwards;
+}

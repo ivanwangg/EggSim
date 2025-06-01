@@ -12,6 +12,7 @@ export default function FryPage() {
   const [showOilSVG, setShowOilSVG] = useState(false);
   const [showSpatulaSVG, setShowSpatulaSVG] = useState(false);
   const [showFinalItems, setShowFinalItems] = useState(false);
+  const [showOilBottle, setShowOilBottle] = useState(true);
 
   const [isZoomed, setIsZoomed] = useState(false);
 
@@ -24,6 +25,21 @@ export default function FryPage() {
   const [typedText, setTypedText] = useState('');
   const indexRef = useRef(0);
   const [showBackButton, setShowBackButton] = useState(false);
+
+
+  //step 3 
+  
+  //egg intro portion
+  const [showEggSlam, setShowEggSlam] = useState(false);
+  const [showEggCracked, setShowEggCracked] = useState(false);
+  const [eggIntroDone, setEggIntroDone] = useState(false);
+  const [showEggPoof, setShowEggPoof] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false)
+  const [animationKey, setAnimationKey] = useState(0); // allow for the egg crack yolk animation happen again if you click the back button
+
+  //oil intro portion
+  const [showOilPourSprite, setShowOilPourSprite] = useState(false);
+
 
   // this will be the cooking instructions. Temporarily using placeholder for the non edge cases
   function getInstructionForTime(time: number) {
@@ -118,38 +134,140 @@ export default function FryPage() {
   }, [clickedNext, cookTime]);
 
   // typewriter effect for instructions. for some reason, you have to add a space in front, or else it will skip a letter. i don't really know why.
-  useEffect(() => {
-    if (clickedNext && cookTime) {
-      const instruction = getInstructionForTime(cookTime);
-      setTypedText('');
-      indexRef.current = 0;
+ useEffect(() => {
+  if (!clickedNext) return;
 
-      const interval = setInterval(() => {
-        if (indexRef.current < instruction.length - 1) {
-          indexRef.current += 1;
-          setTypedText((prev) => prev + instruction[indexRef.current]);
-        } else {
-          clearInterval(interval);
-          setShowBackButton(true);
-        }
-      }, 50);
+  if (cookTime >= 1 && cookTime <= 10) {
+    const oilIntro = ' First step is to pour the bottle of olive oil on the pan. ';
+    const eggIntro = ' Second step is to crack the egg!. ';
+    setTypedText('');
+    indexRef.current = 0;
+    setEggIntroDone(false);
 
-      return () => clearInterval(interval);
-    }
-  }, [clickedNext, cookTime]);
 
-  // go fry button
+    const oilTypingInterval = setInterval(() => {
+      if (indexRef.current < oilIntro.length - 1) {
+        indexRef.current++;
+        setTypedText((prev) => prev + oilIntro[indexRef.current]);
+      } else {
+        clearInterval(oilTypingInterval);
+
+        // oil bottle disappears for pouring
+        setShowOilBottle(false);
+        setShowOilPourSprite(true);
+
+        setTimeout(() => {
+          setShowOilPourSprite(false);
+
+          setTypedText('');
+          indexRef.current = 0;
+
+          const eggTypingInterval = setInterval(() => {
+            if (indexRef.current < eggIntro.length - 1) {
+              indexRef.current++;
+              setTypedText((prev) => prev + eggIntro[indexRef.current]);
+            } else {
+              clearInterval(eggTypingInterval);
+
+              // egg cracking animations
+              setShowEggSlam(true);
+
+              setTimeout(() => {
+                setShowEggPoof(true);
+                setShowEggSlam(false);
+
+                setTimeout(() => {
+                  setShowEggPoof(false);
+                  setShowEggCracked(true);
+
+                  setTimeout(() => {
+                    setShowEggCracked(false);
+                    setStartAnimation(true);
+                    setEggIntroDone(true); // egg intro text done + animations done
+                  }, 600);
+                }, 500);
+              }, 800);
+            }
+          }, 50);
+        }, 1000); // pouring animation length
+      }
+    }, 50);
+
+    return () => {
+      clearInterval(oilTypingInterval);
+    };
+  }
+
+  // <1 or >10 cooking time
+  if (clickedNext && (cookTime < 1 || cookTime > 10)) {
+    const warning = getInstructionForTime(cookTime);
+    setTypedText('');
+    indexRef.current = 0;
+
+    const interval = setInterval(() => {
+      if (indexRef.current < warning.length - 1) {
+        indexRef.current += 1;
+        setTypedText((prev) => prev + warning[indexRef.current]);
+      } else {
+        clearInterval(interval);
+        setShowBackButton(true);
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }
+}, [clickedNext, cookTime]);
+
+
+
+ useEffect(() => {
+  if (eggIntroDone) {
+    const eggIntroText = getInstructionForTime(cookTime);
+    setTypedText(''); // clear typedText for new typing
+    indexRef.current = 0;
+
+    const eggTypeTimer = setInterval(() => {
+      if (indexRef.current < eggIntroText.length - 1) {
+        indexRef.current += 1;
+        setTypedText((prev) => prev + eggIntroText[indexRef.current]);
+      } else {
+        clearInterval(eggTypeTimer);
+        setShowBackButton(true);
+      }
+    }, 50);
+
+    return () => clearInterval(eggTypeTimer);
+  }
+}, [eggIntroDone, cookTime]);
+
+    // go fry button
   function handleNextClick() {
     setClickedNext(true);
     setShowNextButton(false);
-  }
 
+  }
   // back button for when you click less than a minute or more than 10 minutes. its still there for the normal cooking times, but it will get removed once i implement actual instructions for those.
   function handleBackClick() {
     setClickedNext(false);
     setTypedText('');
+    setShowEggCracked(false);
     setShowBackButton(false);
+    setShowOilBottle(true);
   }
+
+  useEffect(() => {
+    if (showEggCracked) {
+      const timer = setTimeout(() => {
+        setShowEggCracked(false);     // hide the initial image
+        setAnimationKey((prev) => prev + 1);
+        setStartAnimation(true);      // show the animation
+      }, 800); 
+
+      return () => clearTimeout(timer);
+    }
+  }, [showEggCracked]);
+
+
 
   return (
     <div
@@ -214,9 +332,11 @@ export default function FryPage() {
           <div className="absolute top-[50%] left-[71.5%] z-10 poof-fall">
             <img src="/pan_sideview.svg" alt="Side Pan" className="w-50" />
           </div>
-          <div className="absolute top-[53%] left-[80%] z-0 poof-fall">
-            <img src="/oil_bottle.svg" alt="Oil Bottle" className="w-50" />
-          </div>
+          {showOilBottle && !showOilPourSprite && (
+            <div className="absolute top-[53%] left-[80%] z-0 poof-fall">
+              <img src="/oil_bottle.svg" alt="Oil Bottle" className="w-50" />
+            </div>
+          )}
           <div className="absolute top-[50%] left-[73%] z-0 poof-fall2">
             <div style={{ transform: 'rotate(40deg)' }}>
               <img src="/spatula_sideview.svg" alt="Side Spatula" className="w-45" />
@@ -238,7 +358,7 @@ export default function FryPage() {
       {showSlider && !(clickedNext && cookTime) && (
         <div className="absolute top-[45%] left-[56%] w-[30%] z-50">
           <p
-            className="text-center text-xl mt-2 font-bold"
+            className="text-center text-xl mt-2 font-bold pixelated-text"
             style={{
               color: `rgb(255, ${Math.max(0, 255 - 255 * (cookTime / 12))}, 0)`,
               textShadow: '0 0 10px rgba(255, 100, 0, 0.6)',
@@ -276,7 +396,7 @@ export default function FryPage() {
       {/* The go fry button for when you want to choose selected time (next button)  */}
       {showNextButton && (
         <button
-          className="absolute top-[52%] left-[68.2%] z-50 bg-yellow-500 hover:bg-orange-700 text-cream-100 font-cursive font-semibold py-2 px-5 rounded-lg shadow-md shadow-orange-400/50 border-2 border-yellow-800 transition-transform active:scale-95 fry-button"
+          className="absolute top-[52%] left-[66.5%] z-50 bg-yellow-500 hover:bg-orange-700 text-cream-100 font-cursive font-semibold py-2 px-5 rounded-lg shadow-md shadow-orange-400/50 border-2 border-yellow-800 transition-transform active:scale-95 fry-button pixelated-text"
           onClick={handleNextClick}
         >
           Go fry 🍳
@@ -286,11 +406,39 @@ export default function FryPage() {
       {/* Back button for going back when you choose an invalid time (currently works as well for normal times since they are not implemented yet) */}
       {showBackButton && (
         <button
-          className="absolute top-[52%] left-[71.5%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2"
+          className="absolute top-[52%] left-[70.5%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2 pixelated-text"
           onClick={handleBackClick}
         >
           Back
         </button>
+      )}
+
+      {showOilPourSprite && (
+        <div className="absolute top-[50%] left-[73%] z-0 w-[56px] h-[64px] oil-pour-animation" />
+      )}
+
+      {showEggSlam && (
+        <div className="absolute top-[50%] left-[60%] z-50 animate-egg-slam">
+          <img src="/egg.svg" alt="Egg Slam" className="w-10" />
+        </div>
+      )}
+
+      {showEggPoof && (
+        <div className="absolute top-[50%] left-[60%] z-50 egg-poof-out">
+          <img src="/fry/eggshell_cracked_together.svg" alt="Poof Effect" className="w-10" />
+        </div>
+      )}
+
+      {showEggCracked && (
+        <div className="absolute top-[50%] left-[75%] rotate-90 z-50">
+          <img src="/fry/eggshell_cracked_together.svg" alt="Poof Effect" className="w-10" />
+        </div>
+      )}
+
+      {startAnimation && (
+        <div key = {animationKey} className="absolute top-[48%] left-[74%] z-0">
+          <div className="w-20 h-20 transform animated-egg-sequence" />
+        </div>
       )}
     </div>
   );
