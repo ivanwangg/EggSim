@@ -24,7 +24,7 @@ export default function NotFound() {
       <p className='font-bold text-5xl text-[#FBBF24] my-5'>
         Oops! This page is eggstinct!
       </p>
-      <button className='mt-5 hover:text-[#FBBF24]' onClick={() => router.push("/")}>
+      <button className='mt-5 rounded-2xl px-3 hover:text-[#FBBF24]' onClick={() => router.push("/")}>
         <p className='animate-bounce'>
           Click me to return to the main page!
         </p>

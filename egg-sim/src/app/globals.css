@@ -98,6 +98,10 @@ button:hover {
   animation: buttonHover 0.3s forwards;
 }
 
+button.no-hover:hover {
+  animation: none !important;
+}
+
 /* boil button (rotate right with heating up effect) */
 @keyframes boilEffect {
   0% {
@@ -151,28 +155,28 @@ button:hover {
 /* hen walking animation */
 @keyframes walkCycle {
   0% {
-    background-image: url('/hen_walking0.svg');
+    background-image: url('/walking/hen_walking0.svg');
   }
   14.28% {
-    background-image: url('/hen_walking1.svg');
+    background-image: url('/walking/hen_walking1.svg');
   }
   28.57% {
-    background-image: url('/hen_walking2.svg');
+    background-image: url('/walking/hen_walking2.svg');
   }
   42.86% {
-    background-image: url('/hen_walking3.svg');
+    background-image: url('/walking/hen_walking3.svg');
   }
   57.14% {
-    background-image: url('/hen_walking4.svg');
+    background-image: url('/walking/hen_walking4.svg');
   }
   71.43% {
-    background-image: url('/hen_walking5.svg');
+    background-image: url('/walking/hen_walking5.svg');
   }
   85.71% {
-    background-image: url('/hen_walking6.svg');
+    background-image: url('/walking/hen_walking6.svg');
   }
   100% {
-    background-image: url('/hen_walking7.svg');
+    background-image: url('/walking/hen_walking7.svg');
   }
 }
 

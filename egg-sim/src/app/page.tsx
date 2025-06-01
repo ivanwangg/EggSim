@@ -11,19 +11,22 @@ export default function Home() {
 
   const handleAddChicken = () => {
     addItem({
-      id: Date.now(),
-      name: "Chicken",
-      icon: "hen_standing_up.svg"
+      id: "chick-blue",
     })
   }
 
-  /*
   return (
     <div className="w-full h-full flex flex-col bg-amber-200">
       hello
-      <button className="w-[5rem] h-[5rem] bg-red-300" onClick={() => setOpenInventory(true)}>
-        Inventory
-      </button>
+      
+      <div className="relative inline-block w-[5rem] h-[5rem] m-2">
+        <img src="inventory/backpack.svg" className="w-full h-full"/>
+        <button
+          className="absolute inset-0 w-full h-full"
+          onClick={() => setOpenInventory(true)}
+        >
+        </button>
+      </div>
 
       <button
         onClick={handleAddChicken}
@@ -37,5 +40,4 @@ export default function Home() {
       )}
     </div>
   );
-  */
 }
