@@ -531,13 +531,12 @@ button.no-hover:hover {
   }
 }
 
-/* Animation for the vertical movement */
 @keyframes moveUpAndDown {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-60px); /* Adjust the distance as needed */
+    transform: translateY(-60px); 
   }
 }
 
