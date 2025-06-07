@@ -349,33 +349,16 @@ button.no-hover:hover {
 
 /* ignore below, im thinking of implementing a glow effect for the items, like when you find an item in a game, but I'm not too sure if I actually want to use this */
 @keyframes pulseGlow {
-0%, 100% {
-  box-shadow: 0 0 10px 5px rgba(255, 215, 0, 0.6);
-  filter: blur(3px);
-}
-50% {
-  box-shadow: 0 0 20px 10px rgba(255, 165, 0, 1);
-  filter: blur(6px);
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(255, 165, 0, 1));
   }
 }
 
-.glowing-halo {
-  position: relative;
-  display: inline-block;
-}
-
-.glowing-halo::before {
-  content: '';
-  position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 223, 0, 0.6), transparent 70%);
-  animation: pulseGlow 3s ease-in-out infinite;
-  filter: blur(10px);
-  z-index: -1;
+.pulse-glow{
+  animation: pulseGlow 1s ease-out forwards infinite;
 }
 
 @keyframes poofFall {
@@ -477,35 +460,23 @@ button.no-hover:hover {
   0% {
     background-image: url('/fry/egg_cracked_raw.svg');
   }
-  10% {
+  20% {
     background-image: url('/fry/raw_egg_falling.svg');
   }
-  25%{
+  40%{
     background-image: url('/fry/raw_egg_falling_v2.svg');
   }
-  45%{
-    background-image: url('/fry/raw_egg_falling_v2.svg');
+  60%{
+    
     transform: translateY(0);
   }
-  55%{
-    background-image: url('/fry/raw_egg_falling_v2.svg');
-    transform: translateY(30px);
+   85% {
+    transform: translateY(150px); 
+    opacity: 0.8; 
   }
-  65%{
-    background-image: url('/fry/raw_egg_falling_v2.svg');
-    transform: translateY(40px);
-  }
-  75%{
-    background-image: url('/fry/raw_egg_falling_v2.svg');
-    transform: translateY(50px);
-  }
-  85%{
-    background-image: url('/fry/raw_egg_falling_v2.svg');
-    transform: translateY(60px);
-  }
-  100%{
-    background-image: url('/fry/raw_egg_falling_v2.svg');
-    opacity: 0;
+  100% {
+    transform: translateY(200px); 
+    opacity: 0; 
   }
 }
 
@@ -514,8 +485,8 @@ button.no-hover:hover {
   height: 5rem;
   background-size: contain;
   background-repeat: no-repeat;
-  animation: eggCycle 1s steps(1) forwards;
-  transition: background-position 0.5s ease-out
+  animation: eggCycle 1.2s linear forwards;
+  transition: transform 1s ease-out,
 }
 
 @keyframes oilPourCycle {
@@ -547,3 +518,66 @@ button.no-hover:hover {
   background-position: center;
   animation: oilPourCycle 1.5s steps(5) forwards;
 }
+
+@keyframes flipAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveUpAndDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-60px); 
+  }
+}
+
+.wrapper {
+  display: inline-block;
+  animation: moveUpAndDown 1.3s ease-in-out 1s;
+}
+
+.flip-element {
+  animation: flipAnimation 1.1s ease-in-out 1s;
+  transform-origin: center;
+}
+
+
+
+
+/* move spatula left and right */
+@keyframes spatulaMove {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(30px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* flip the spatula */
+@keyframes spatulaFlipUp {
+  0% {
+    transform: rotate(40deg);
+  }
+  100% {
+    transform: rotate(90deg) translateY(-40px);
+  }
+}
+
+.spatula-animation {
+  animation: poofIn 1s ease-in-out, spatulaMove 1s ease-in-out, spatulaFlipUp 0.5s ease-in-out 1s forwards;
+}
+
+
