@@ -10,9 +10,7 @@ import BackpackButton from '../components/backpackButton';
 import XPBar from '../components/xpBar';
 import Inventory from '../components/inventory';
 
-
 export default function HomePage() {
-
   const router = useRouter();
 
   const [animationStarted, setAnimationStarted] = useState(false);
@@ -20,8 +18,8 @@ export default function HomePage() {
   const [eggClicked, setEggClicked] = useState(false);
   const [eggAnimationFinished, setEggAnimationFinished] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-  const [eggJumpFinished, setEggJumpFinished] = useState(false); 
-  const [showPrompt, setShowPrompt] = useState(false); 
+  const [eggJumpFinished, setEggJumpFinished] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
   const [isBackpackHovered, setIsBackpackHovered] = useState(false);
 
   const { currentXP, maxXP, level, setCurrentXP, setCurrentLevel } = useXP();
@@ -32,7 +30,7 @@ export default function HomePage() {
       setCurrentLevel(level + 1);
     }
     setCurrentXP((currentXP + val) % maxXP);
-  }
+  };
 
   const handleClick = () => {
     if (!animationStarted) {
@@ -67,21 +65,29 @@ export default function HomePage() {
   // delay instructions appearing
   useEffect(() => {
     setTimeout(() => {
-      setShowPrompt(true); 
+      setShowPrompt(true);
     }, 1000); //  appears after 1 second
   }, []);
 
   const handleEggJumpAnimationEnd = () => {
-    setEggJumpFinished(true); 
+    setEggJumpFinished(true);
   };
 
   return (
-    <div className="relative w-full h-screen overflow-x-hidden" style={{ backgroundImage: 'url(/farm_background_2.svg)', backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '100vh' }}>
+    <div
+      className="relative w-full h-screen overflow-x-hidden"
+      style={{
+        backgroundImage: 'url(/farm_background_2.svg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+      }}
+    >
       <XPBar></XPBar>
       {/* <button className="absolute mt-[10rem] w-[10rem] h-[5rem] bg-red-500" onClick={() => gainXP(10)}>
         click me
       </button> */}
-      <BackpackButton setOpenInventory={() => setOpenInventory(true)}/>
+      <BackpackButton setOpenInventory={() => setOpenInventory(true)} />
       {openInventory && (
         <Inventory onClose={() => setOpenInventory(false)}></Inventory>
       )}
@@ -111,9 +117,7 @@ export default function HomePage() {
       </div>
 
       {/* Hen walking animation */}
-      {animationStarted && (
-        <div className="walking-hen" />
-      )}
+      {animationStarted && <div className="walking-hen" />}
 
       {/* Egg (Appears after hen walks off screen) */}
       {eggVisible && !eggClicked && (
@@ -136,7 +140,10 @@ export default function HomePage() {
 
       {/* Egg rising animation */}
       {eggClicked && !eggAnimationFinished && (
-        <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2" style={{ zIndex: 4, animation: 'slideUp 2s ease-out forwards' }}>
+        <div
+          className="absolute top-[70%] left-[50%] transform -translate-x-1/2"
+          style={{ zIndex: 4, animation: 'slideUp 2s ease-out forwards' }}
+        >
           <img
             src="/egg.svg"
             alt="Egg Rising"
@@ -148,7 +155,15 @@ export default function HomePage() {
 
       {/* Egg enlarging animation */}
       {eggClicked && eggAnimationFinished && (
-        <div className="absolute top-[30%] left-[50%] transform -translate-x-1/2" style={{ zIndex: 4, animation: 'enlarge 2s ease-in-out forwards', animationIterationCount: 'infinite', animationDirection: 'alternate' }}>
+        <div
+          className="absolute top-[30%] left-[50%] transform -translate-x-1/2"
+          style={{
+            zIndex: 4,
+            animation: 'enlarge 2s ease-in-out forwards',
+            animationIterationCount: 'infinite',
+            animationDirection: 'alternate',
+          }}
+        >
           <img
             src="/egg.svg"
             alt="Egg Enlarging"
@@ -161,9 +176,7 @@ export default function HomePage() {
       {/* Show options after egg animation finishes */}
       {eggAnimationFinished && showOptions && (
         <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 space-y-8">
-          <h2
-            className="text-2xl text-white font-semibold animate__animated animate__fadeIn animate__delay-2s pixelated-text glow-effect animate__bounce"
-          >
+          <h2 className="text-2xl text-white font-semibold animate__animated animate__fadeIn animate__delay-2s pixelated-text glow-effect animate__bounce">
             What do you want to do with the egg?
           </h2>
           <div className="space-x-100">
