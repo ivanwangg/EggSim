@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 
 export default function FryPage() {
@@ -7,7 +8,7 @@ export default function FryPage() {
   const [isEggVisible, setIsEggVisible] = useState(false);
   const [isPromptVisible, setIsPromptVisible] = useState(false);
 
-  // step 1 
+  // step 1
   const [showPanSVG, setShowPanSVG] = useState(false);
   const [showOilSVG, setShowOilSVG] = useState(false);
   const [showSpatulaSVG, setShowSpatulaSVG] = useState(false);
@@ -26,15 +27,14 @@ export default function FryPage() {
   const [typedText, setTypedText] = useState('');
   const [showBackButton, setShowBackButton] = useState(false);
   const indexRef = useRef(0);
+  const [showBackButton, setShowBackButton] = useState(false);
 
-
-  //step 3 
-
+  //step 3
   //egg intro portion
   const [showEggSlam, setShowEggSlam] = useState(false);
   const [showEggCracked, setShowEggCracked] = useState(false);
   const [showEggPoof, setShowEggPoof] = useState(false);
-  const [startAnimation, setStartAnimation] = useState(false)
+  const [startAnimation, setStartAnimation] = useState(false);
   const [animationKey, setAnimationKey] = useState(0); // allow for the egg crack yolk animation happen again if you click the back button
 
   //oil intro portion
@@ -45,23 +45,19 @@ export default function FryPage() {
   const [showResult, setShowResult] = useState(false); // To show the result SVG
   const [resultSVG, setResultSVG] = useState(''); // Store the final egg result SVG path
 
-
   //spatula movement portion
   const [isSpatulaMove, setIsSpatulaMove] = useState(false); // Tracks if spatula is moving
   const [flipIndex, setFlipIndex] = useState(0);
   const [flipCount, setFlipCount] = useState(0);
 
-
   //results section
   const [typedTitle, setTypedTitle] = useState('');
   const [typedDescription, setTypedDescription] = useState('');
 
-
-
   // this will be the cooking instructions. Temporarily using placeholder for the non edge cases. Plan to make less than 1 minute the only edge case in the future.
   function getInstructionForTime(time: number) {
     if (time < 1) {
-      return " Selecting less than 1 minute is not recommended because the egg will not cook properly. It might be unsafe to eat and texture will be unpleasant.";
+      return ' Selecting less than 1 minute is not recommended because the egg will not cook properly. It might be unsafe to eat and texture will be unpleasant.';
     } else {
       return " Frying for more than 10 minutes might burn the egg and make it rubbery. It's rarely necessary unless you're going for crispy bits. Or you just like charcoal. Menace.";
     }
@@ -153,7 +149,8 @@ export default function FryPage() {
     if (!clickedNext) return;
 
     if (cookTime >= 1 && cookTime <= 10) {
-      const oilIntro = ' First step is to pour the bottle of olive oil on the pan! ';
+      const oilIntro =
+        ' First step is to pour the bottle of olive oil on the pan! ';
       const eggIntro = ' Second step is to crack the egg! ';
       const flipIntro = ' Third step is to flip the egg with your spatula! ';
 
@@ -203,7 +200,6 @@ export default function FryPage() {
                       setShowEggCracked(false);
                       setStartAnimation(true);
 
-
                       // flip step typing
                       setTypedText('');
                       indexRef.current = 0;
@@ -211,7 +207,9 @@ export default function FryPage() {
                       const flipTypingInterval = setInterval(() => {
                         if (indexRef.current < flipIntro.length - 1) {
                           indexRef.current++;
-                          setTypedText((prev) => prev + flipIntro[indexRef.current]);
+                          setTypedText(
+                            (prev) => prev + flipIntro[indexRef.current]
+                          );
                         } else {
                           clearInterval(flipTypingInterval);
                           setTimeout(() => {
@@ -257,15 +255,33 @@ export default function FryPage() {
     }
   }, [clickedNext, cookTime]);
 
+      const interval = setInterval(() => {
+        if (indexRef.current < warning.length - 1) {
+          indexRef.current += 1;
+          setTypedText((prev) => prev + warning[indexRef.current]);
+        } else {
+          clearInterval(interval);
+          setShowResult(true);
+          if (cookTime < 1) {
+            setResultSVG('/fry/result/egg_cooked_0_mins.svg');
+          }
+          if (cookTime >= 10) {
+            setResultSVG('/fry/result/egg_cooked_10_mins.svg');
+          }
+          setShowBackButton(true);
+        }
+      }, 50);
 
+      return () => clearInterval(interval);
+    }
+  }, [clickedNext, cookTime]);
 
   // go fry button
   function handleNextClick() {
     setClickedNext(true);
     setShowNextButton(false);
-
   }
-  // back button for when you click less than a minute or more than 10 minutes. 
+  // back button for when you click less than a minute or more than 10 minutes.
   function handleBackClick() {
     setClickedNext(false);
     setTypedText('');
@@ -278,7 +294,7 @@ export default function FryPage() {
     setStartAnimation(false);
     setFlipIntro(false);
     setShowResult(false);
-    setAnimationKey(prev => prev + 1);
+    setAnimationKey((prev) => prev + 1);
     setTypedTitle('');
     setTypedDescription('');
   }
@@ -286,9 +302,9 @@ export default function FryPage() {
   useEffect(() => {
     if (showEggCracked) {
       const timer = setTimeout(() => {
-        setShowEggCracked(false);     // hide the initial image
+        setShowEggCracked(false); // hide the initial image
         setAnimationKey((prev) => prev + 1);
-        setStartAnimation(true);      // show the animation
+        setStartAnimation(true); // show the animation
       }, 800);
 
       return () => clearTimeout(timer);
@@ -374,25 +390,52 @@ export default function FryPage() {
   // titles and descriptions for each resulting fried egg based on the cook time.
   function getResultParts(cookTime: number): [string, string] {
     if (cookTime < 1) {
-      return [" Straight Yolk", "  Basically raw. A slippery situation. Not recommended!"];
+      return [
+        ' Straight Yolk',
+        '  Basically raw. A slippery situation. Not recommended!',
+      ];
     } else if (cookTime <= 2) {
-      return [" Glossy Goo", "  Sizzling but still slimy. It's more art than breakfast."];
+      return [
+        ' Glossy Goo',
+        "  Sizzling but still slimy. It's more art than breakfast.",
+      ];
     } else if (cookTime <= 3) {
-      return [" Barely Sunny", "  Soft whites, runny yolk. A bit under, but getting there."];
+      return [
+        ' Barely Sunny',
+        '  Soft whites, runny yolk. A bit under, but getting there.',
+      ];
     } else if (cookTime <= 4) {
-      return [" Sunny Side Up", "  Classic diner style. Bright yolk, delicate whites."];
+      return [
+        ' Sunny Side Up',
+        '  Classic diner style. Bright yolk, delicate whites.',
+      ];
     } else if (cookTime <= 5) {
-      return [" Half-Set Hero", "  The yolk jiggles, the whites stand firm. A balance of chaos and control."];
+      return [
+        ' Half-Set Hero',
+        '  The yolk jiggles, the whites stand firm. A balance of chaos and control.',
+      ];
     } else if (cookTime <= 6) {
-      return [" Over Easy", "  Flipped and still gooey in the center. For the adventurous bruncher."];
+      return [
+        ' Over Easy',
+        '  Flipped and still gooey in the center. For the adventurous bruncher.',
+      ];
     } else if (cookTime <= 7) {
-      return [" Over Medium", "  Perfectly balanced – not too soft, not too firm."];
+      return [
+        ' Over Medium',
+        '  Perfectly balanced – not too soft, not too firm.',
+      ];
     } else if (cookTime < 9) {
-      return [" Over Hard", "  Solid yolk, crisp edges. A dependable breakfast companion."];
+      return [
+        ' Over Hard',
+        '  Solid yolk, crisp edges. A dependable breakfast companion.',
+      ];
     } else if (cookTime <= 10) {
-      return [" Pan Toasted", "  Well-done and proud. A bite with backbone."];
+      return [' Pan Toasted', '  Well-done and proud. A bite with backbone.'];
     } else {
-      return [" Crispy Special", "  Crackly edges, tough core. A bite forged in hellfire."];
+      return [
+        ' Crispy Special',
+        '  Crackly edges, tough core. A bite forged in hellfire.',
+      ];
     }
   }
 
@@ -410,7 +453,7 @@ export default function FryPage() {
     const typeTitle = () => {
       if (titleIndex < title.length - 1) {
         titleIndex++;
-        setTypedTitle(prev => prev + title[titleIndex]);
+        setTypedTitle((prev) => prev + title[titleIndex]);
         setTimeout(typeTitle, 50);
       } else {
         // start typing description after title
@@ -421,14 +464,13 @@ export default function FryPage() {
     const typeDescription = () => {
       if (descIndex < description.length - 1) {
         descIndex++;
-        setTypedDescription(prev => prev + description[descIndex]);
+        setTypedDescription((prev) => prev + description[descIndex]);
         setTimeout(typeDescription, 50);
       }
     };
 
     typeTitle();
   }, [showResult, cookTime]);
-
 
   return (
     <div
@@ -440,14 +482,13 @@ export default function FryPage() {
         }`}
       style={{
         // camera pans to the right when you click the fry, so we can see actual cooking closer
-        transformOrigin: (isZoomed || (clickedNext && cookTime)) ? '100% center' : 'center',
+        transformOrigin:
+          isZoomed || (clickedNext && cookTime) ? '100% center' : 'center',
         backgroundImage: 'url(/kitchen_background.svg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-
-
       {showResult && (
         <div className="absolute inset-0 z-40 backdrop-blur-sm bg-black/20 pointer-events-none" />
       )}
@@ -465,7 +506,7 @@ export default function FryPage() {
       {isEggVisible && (
         <div className="absolute top-[45.8%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-12">
           <div className="egg-slide">
-            <img src="/egg.svg" alt="Egg" className="w-10" />
+            <Image src="/egg.svg" alt="Egg" width={40} height={40} />
           </div>
         </div>
       )}
@@ -473,22 +514,31 @@ export default function FryPage() {
       {/* Necessary items section*/}
       {(step === 1 || step === 3 || step === 5) && (
         <h1 className="text-2xl font-bold glow-effect2 zoom-in-out mb-120 pixelated-text">
-          {step === 1 ? '1. A frying pan' : step === 3 ? '2. Some oil' : '3. A spatula'}
+          {step === 1
+            ? '1. A frying pan'
+            : step === 3
+              ? '2. Some oil'
+              : '3. A spatula'}
         </h1>
       )}
       {showPanSVG && (
         <div className="absolute top-[30%] poof-in z-15">
-          <img src="/pan_topview.svg" alt="Frying Pan" className="w-45" />
+          <Image
+            src="/pan_topview.svg"
+            alt="Frying Pan"
+            width={180}
+            height={180}
+          />
         </div>
       )}
       {showOilSVG && (
         <div className="absolute top-[30%] left-[46.5%] poof-in z-15">
-          <img src="/oil_bottle.svg" alt="Oil" className="w-45" />
+          <Image src="/oil_bottle.svg" alt="Oil" width={180} height={180} />
         </div>
       )}
       {showSpatulaSVG && (
         <div className="absolute top-[30%] poof-in z-50">
-          <img src="/spatula.svg" alt="Spatula" className="w-35" />
+          <Image src="/spatula.svg" alt="Spatula" width={140} height={180} />
         </div>
       )}
 
@@ -496,17 +546,33 @@ export default function FryPage() {
       {showFinalItems && (
         <>
           <div className="absolute top-[50%] left-[71.5%] z-10 poof-fall">
-            <img src="/pan_sideview.svg" alt="Side Pan" className="w-50" />
+            <Image
+              src="/pan_sideview.svg"
+              alt="Side Pan"
+              width={200}
+              height={200}
+            />
           </div>
           {showOilBottle && !showOilPourSprite && (
             <div className="absolute top-[53%] left-[80%] z-0 poof-fall">
-              <img src="/oil_bottle.svg" alt="Oil Bottle" className="w-50" />
+              <Image
+                src="/oil_bottle.svg"
+                alt="Oil Bottle"
+                width={200}
+                height={200}
+              />
             </div>
           )}
           {showSpatulaPan && !isSpatulaMove && (
             <div className="absolute top-[50%] left-[73%] z-0 poof-fall2">
               <div style={{ transform: 'rotate(40deg)' }}>
-                <img src="/spatula_sideview.svg" alt="Side Spatula" className="w-45" />
+                <Image
+                  src="/spatula_sideview.svg"
+                  alt="Side Spatula"
+                  className="w-45"
+                  width={180}
+                  height={180}
+                />
               </div>
             </div>
           )}
@@ -587,19 +653,29 @@ export default function FryPage() {
 
       {showEggSlam && (
         <div className="absolute top-[50%] left-[60%] z-50 animate-egg-slam">
-          <img src="/egg.svg" alt="Egg Slam" className="w-10" />
+          <Image src="/egg.svg" alt="Egg Slam" width={40} height={40} />
         </div>
       )}
 
       {showEggPoof && (
         <div className="absolute top-[50%] left-[60%] z-50 egg-poof-out">
-          <img src="/fry/eggshell_cracked_together.svg" alt="Poof Effect" className="w-10" />
+          <Image
+            src="/fry/eggshell_cracked_together.svg"
+            alt="Poof Effect"
+            width={40}
+            height={40}
+          />
         </div>
       )}
 
       {showEggCracked && (
         <div className="absolute top-[50%] left-[75%] rotate-90 z-50">
-          <img src="/fry/eggshell_cracked_together.svg" alt="Poof Effect" className="w-10" />
+          <Image
+            src="/fry/eggshell_cracked_together.svg"
+            alt="Poof Effect"
+            width={40}
+            height={40}
+          />
         </div>
       )}
 
@@ -614,7 +690,12 @@ export default function FryPage() {
           className="absolute top-[48.5%] left-[72.5%] z-0 spatula-animation"
           style={{ transform: 'rotate(0deg)' }}
         >
-          <img src="/spatula_sideview.svg" alt="Side Spatula" className="w-45" />
+          <Image
+            src="/spatula_sideview.svg"
+            alt="Side Spatula"
+            width={180}
+            height={180}
+          />
         </div>
       )}
 
@@ -622,17 +703,23 @@ export default function FryPage() {
       {isSpatulaMove && (
         <div className="absolute top-[58%] left-[75%] z-0 wrapper">
           <div className="flip-element">
-            <img
+            <Image
               src="/fry/egg_cracked.svg"
               alt="Flipping Egg"
-              className="w-10"
+              width={40}
+              height={40}
             />
           </div>
         </div>
       )}
       {showResult && (
         <div className="absolute top-[25%] left-[69%] z-50 zoom-in-out pulse-glow">
-          <img src={resultSVG || undefined} alt="Final Egg Result" className="w-50" />
+          <Image
+            src={resultSVG}
+            alt="Final Egg Result"
+            width={200}
+            height={200}
+          />
         </div>
       )}
       {showResult && (

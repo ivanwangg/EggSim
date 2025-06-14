@@ -1,5 +1,5 @@
-'use client'
-import { createContext, useContext, useState, ReactNode } from "react";
+'use client';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface XPContextProps {
   currentXP: number;
@@ -28,11 +28,7 @@ export function XPProvider({ children }: XPProviderProps) {
     setCurrentLevel,
   };
 
-  return (
-    <XPContext.Provider value={value}>
-      {children}
-    </XPContext.Provider>
-  )
+  return <XPContext.Provider value={value}>{children}</XPContext.Provider>;
 }
 
 export function useXP() {

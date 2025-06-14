@@ -1,6 +1,6 @@
-'use client'
-import { useXP } from "../context/XPContext";
-
+'use client';
+import Image from 'next/image';
+import { useXP } from '../context/XPContext';
 
 export default function XPBar() {
   const { currentXP, maxXP, level } = useXP();
@@ -9,7 +9,13 @@ export default function XPBar() {
   return (
     <div className="w-[23rem] flex flex-row items-center fixed top-25 left-[3rem]">
       <div className="relative w-[6rem] h-[6rem] z-50">
-        <img src={`${level % 5 == 0 ? "xp-bar/star.svg" : "xp-bar/star_v2.svg"}`} className="w-full h-full object-contain"/>
+        <Image
+          src={`${level % 5 == 0 ? 'xp-bar/star.svg' : 'xp-bar/star_v2.svg'}`}
+          className="object-contain"
+          width={96}
+          height={96}
+          alt=""
+        />
         <p className="absolute inset-0 flex justify-center items-center font-bold text-xl pb-2 text-black pr-0.4 pt-1">
           {level}
         </p>
@@ -25,8 +31,6 @@ export default function XPBar() {
           </p>
         </div>
       </div>
-
     </div>
   );
 }
-
