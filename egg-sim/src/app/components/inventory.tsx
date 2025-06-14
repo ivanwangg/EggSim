@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
 import { allItems } from '../types/Item';
+import Image from 'next/image';
 
 interface InventoryProps {
   onClose: () => void;
@@ -62,11 +63,13 @@ export default function Inventory({ onClose }: InventoryProps) {
                     : 'bg-gray-300 border-gray-400 opacity-50'
                 }`}
               >
-                <img
+                <Image
                   src={item.icon}
                   alt={item.name}
                   title={item.name}
-                  className="w-[80%] h-[80%] object-contain"
+                  className="object-contain"
+                  width={90}
+                  height={90}
                 />
                 {collected && (
                   <button

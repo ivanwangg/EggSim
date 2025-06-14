@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
@@ -22,7 +23,7 @@ export default function NotFound() {
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-center bg-[#FFFBF0] pt-20">
-      <img src={frames[frameIndex]} className="w-[15rem] h-[15rem]"></img>
+      <Image src={frames[frameIndex]} width={240} height={240} alt=""></Image>
       <p className="font-bold text-5xl text-[#FBBF24] my-5">
         Oops! This page is eggstinct!
       </p>

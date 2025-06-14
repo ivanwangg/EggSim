@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 
@@ -65,16 +66,20 @@ export default function FAQPage() {
           </h1>
           <div className="relative w-32 h-32 select-none drop-shadow-lg">
             {activeImage === 0 ? (
-              <img
+              <Image
                 src="/hen_standing.svg"
                 alt="Hen standing"
-                className="absolute inset-0 w-full h-full object-contain transition-opacity duration-100 opacity-100"
+                className="absolute inset-0 object-contain transition-opacity duration-100 opacity-100"
+                width={128}
+                height={128}
               />
             ) : (
-              <img
+              <Image
                 src="/hen_standing_up.svg"
                 alt="Hen standing up"
-                className="absolute inset-0 w-full h-full object-contain transition-opacity duration-100 opacity-100"
+                className="absolute inset-0 object-contain transition-opacity duration-100 opacity-100"
+                width={128}
+                height={128}
               />
             )}
           </div>
