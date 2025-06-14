@@ -1,13 +1,12 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from "react";
-import { useInventory } from "./context/InventoryContext";
-import { Item } from "./types/Item";
+import { useState, useEffect } from 'react';
+import { useInventory } from './context/InventoryContext';
+import { Item } from './types/Item';
 
-import Spinner from "./components/spinner";
+import Spinner from './components/spinner';
 
 export default function Home() {
-
   const { addItem } = useInventory();
 
   const [result, setResult] = useState<Item | null>(null);
@@ -26,9 +25,9 @@ export default function Home() {
 
   const handleAddChicken = () => {
     addItem({
-      id: "chick-blue",
-    })
-  }
+      id: 'chick-blue',
+    });
+  };
 
   return (
     <div className="w-full h-full flex flex-col bg-amber-200">

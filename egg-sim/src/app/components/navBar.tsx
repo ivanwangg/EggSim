@@ -1,9 +1,10 @@
-'use client'
-import NavButton from "./navButton";
+'use client';
+import NavButton from './navButton';
 
 
 
 export default function NavBar() {
+<<<<<<< HEAD
 // bg-[#C89F77
   return (
     <nav className="fixed top-1 w-full z-50 bg-transparent px-5 py-8 flex items-center justify-between">
@@ -12,8 +13,21 @@ export default function NavBar() {
         {/* old logo stuff
         <img src="logo/logo_mascot.svg" className="w-[5rem] h-[5rem] mx-2 px-2"
         
+=======
+  return (
+    <div className="w-full h-[5rem] flex flex-col bg-[#C89F77] top-0 fixed z-50">
+      <div className="w-full h-full flex flex-row items-center px-3">
+        <img
+          src="logo/logo_mascot.svg"
+          className="w-[5rem] h-[5rem] mx-2 px-2"
+        />
+
+>>>>>>> 29e7492 (Set up Prettier and Linting)
         <div className="w-full font-bold text-2xl text-white">
-          <img src="logo/logo_text_only.svg" className="w-[12rem] h-[12rem] -ml-5 mt-2"/>
+          <img
+            src="logo/logo_text_only.svg"
+            className="w-[12rem] h-[12rem] -ml-5 mt-2"
+          />
         </div>
 
         */}

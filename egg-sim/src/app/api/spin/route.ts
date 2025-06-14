@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 
 const items = ['Knife', 'AK-47', 'AWP', 'Pistol', 'Gloves', 'SMG', 'Grenade'];
