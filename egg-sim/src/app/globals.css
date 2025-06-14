@@ -612,3 +612,147 @@ boil-slider::-webkit-slider-thumb {
 .boil-slider::-moz-range-thumb:hover {
   drop-shadow: 0 0 20px rgba(0, 85, 255, 1); 
 }
+
+@keyframes eggDrop {
+  0% {
+    transform: translateY(-200%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(40%);
+  }
+  75% {
+    transform: translateY(30%);
+  }
+  85% {
+    transform: translateY(35%);
+  }
+  100% {
+    transform: translateY(35%);
+    opacity: 0;
+  }
+}
+
+.egg-drop {
+  animation: eggDrop 1s ease-out forwards;
+}
+
+.splash-animate {
+  animation: splash-scale 0.4s ease-out forwards;
+}
+
+@keyframes splash-scale {
+  0% {
+    transform: scale(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+
+.pot-flash-container {
+  position: relative;
+}
+
+.pot-flash-original {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: flashOut 3s ease-out forwards;
+  z-index: 10;
+}
+
+.pot-flash-final {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  animation: fadeInNewPot 3s ease-out forwards;
+  z-index: 5;
+}
+
+@keyframes flashOut {
+  0% {
+    opacity: 1;
+    filter: none;
+  }
+  50% {
+    opacity: 1;
+  }
+  60% {
+    filter: brightness(1.6) sepia(0.7) hue-rotate(-30deg);
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInNewPot {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.w-\[150px\] {
+  width: 150px;
+  height: 150px;
+  position: relative;
+}
+
+.bg-pot1 {
+  background-image: url('/boil/pot_v2_water.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: fadeSwitch 2s forwards;
+}
+
+@keyframes fadeSwitch {
+  0%, 40% {
+    opacity: 1;
+    background-image: url('/boil/pot_v2_water.svg');
+  }
+  50% {
+    opacity: 0;
+  }
+  55% {
+    background-image: url('/boil/pot_boiling_water.svg');
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+  20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+
+.shake-animation {
+  animation: shake 1s ease-in-out infinite;
+}
+
+/* end of boil page styles */
