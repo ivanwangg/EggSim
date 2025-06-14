@@ -27,7 +27,6 @@ export default function FryPage() {
   const [typedText, setTypedText] = useState('');
   const [showBackButton, setShowBackButton] = useState(false);
   const indexRef = useRef(0);
-  const [showBackButton, setShowBackButton] = useState(false);
 
   //step 3
   //egg intro portion
@@ -255,27 +254,6 @@ export default function FryPage() {
     }
   }, [clickedNext, cookTime]);
 
-      const interval = setInterval(() => {
-        if (indexRef.current < warning.length - 1) {
-          indexRef.current += 1;
-          setTypedText((prev) => prev + warning[indexRef.current]);
-        } else {
-          clearInterval(interval);
-          setShowResult(true);
-          if (cookTime < 1) {
-            setResultSVG('/fry/result/egg_cooked_0_mins.svg');
-          }
-          if (cookTime >= 10) {
-            setResultSVG('/fry/result/egg_cooked_10_mins.svg');
-          }
-          setShowBackButton(true);
-        }
-      }, 50);
-
-      return () => clearInterval(interval);
-    }
-  }, [clickedNext, cookTime]);
-
   // go fry button
   function handleNextClick() {
     setClickedNext(true);
@@ -474,12 +452,13 @@ export default function FryPage() {
 
   return (
     <div
-      className={`relative w-full h-screen bg-yellow-50 flex items-center justify-center flex-col overflow-hidden transition-transform duration-[3000ms] ease-in-out ${clickedNext && cookTime
+      className={`relative w-full h-screen bg-yellow-50 flex items-center justify-center flex-col overflow-hidden transition-transform duration-[3000ms] ease-in-out ${
+        clickedNext && cookTime
           ? 'scale-[2]'
           : isZoomed
             ? 'scale-[1.5]'
             : 'scale-100'
-        }`}
+      }`}
       style={{
         // camera pans to the right when you click the fry, so we can see actual cooking closer
         transformOrigin:
