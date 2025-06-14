@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function ScrollManager() {
   const pathname = usePathname();
@@ -12,7 +12,7 @@ export default function ScrollManager() {
 
   useEffect(() => {
     if (isNoScrollPage) {
-      document.documentElement.style.overflow = "hidden"; // d\isables both vertical and horizontal scroll
+      document.documentElement.style.overflow = 'hidden'; // d\isables both vertical and horizontal scroll
     } else {
       document.documentElement.style.overflow = "";
     }

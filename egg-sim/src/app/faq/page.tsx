@@ -1,52 +1,55 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import { ChevronRight } from "lucide-react";
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { ChevronRight } from 'lucide-react';
 
 export default function FAQPage() {
   const faqs = [
     {
-      question: "How long do you want to boil an egg?",
+      question: 'How long do you want to boil an egg?',
       answer: [
-        "5 minutes: set white and runny yolk – just right for dipping into.",
-        "6 minutes: liquid yolk – a little less oozy.",
-        "7 minutes: almost set – deliciously sticky.",
-        "8 minutes: softly set – this is what you want to make Scotch eggs.",
-        "10 minutes: the classic hard-boiled egg – mashable but not dry and chalky.",
+        '5 minutes: set white and runny yolk – just right for dipping into.',
+        '6 minutes: liquid yolk – a little less oozy.',
+        '7 minutes: almost set – deliciously sticky.',
+        '8 minutes: softly set – this is what you want to make Scotch eggs.',
+        '10 minutes: the classic hard-boiled egg – mashable but not dry and chalky.',
       ],
     },
     {
-      question: "What is every way to fry an egg?",
+      question: 'What is every way to fry an egg?',
       answer: [
-        "The most common methods are: sunny side up, over easy, over medium, and over well.",
+        'The most common methods are: sunny side up, over easy, over medium, and over well.',
       ],
     },
     {
-      question: "Are eggs good for you?",
+      question: 'Are eggs good for you?',
       answer: [
-        "Yes. Eggs are a good source of protein, healthy fats, and vitamins such as B12, D, and A. The only way it would be bad for you is if you cooked it wrong and that's on you, not the egg."
+        "Yes. Eggs are a good source of protein, healthy fats, and vitamins such as B12, D, and A. The only way it would be bad for you is if you cooked it wrong and that's on you, not the egg.",
       ],
     },
     {
-      question: "How many eggs are eaten per year?",
+      question: 'How many eggs are eaten per year?',
       answer: [
-        "Over 1 trillion eggs are consumed globally each year. The average American eats about 280 eggs annually.",
+        'Over 1 trillion eggs are consumed globally each year. The average American eats about 280 eggs annually.',
       ],
     },
   ];
 
-  const [openStates, setOpenStates] = useState<boolean[]>(faqs.map(() => false));
+  const [openStates, setOpenStates] = useState<boolean[]>(
+    faqs.map(() => false)
+  );
   const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveImage(prev => (prev === 0 ? 1 : 0));
+      setActiveImage((prev) => (prev === 0 ? 1 : 0));
     }, 200);
     return () => clearInterval(interval);
   }, []);
 
   const toggle = (index: number) => {
-    setOpenStates(prev => {
+    setOpenStates((prev) => {
       const newStates = [...prev];
       newStates[index] = !newStates[index];
       return newStates;
@@ -63,16 +66,20 @@ export default function FAQPage() {
           </h1>
           <div className="relative w-32 h-32 select-none drop-shadow-lg">
             {activeImage === 0 ? (
-              <img
+              <Image
                 src="/hen_standing.svg"
                 alt="Hen standing"
-                className="absolute inset-0 w-full h-full object-contain transition-opacity duration-100 opacity-100"
+                className="absolute inset-0 object-contain transition-opacity duration-100 opacity-100"
+                width={128}
+                height={128}
               />
             ) : (
-              <img
+              <Image
                 src="/hen_standing_up.svg"
                 alt="Hen standing up"
-                className="absolute inset-0 w-full h-full object-contain transition-opacity duration-100 opacity-100"
+                className="absolute inset-0 object-contain transition-opacity duration-100 opacity-100"
+                width={128}
+                height={128}
               />
             )}
           </div>
@@ -89,7 +96,7 @@ export default function FAQPage() {
                 onClick={() => toggle(index)}
                 aria-expanded={openStates[index]}
                 className={`w-full flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-[#D97706] rounded px-3 py-2
-                  ${openStates[index] ? "text-[#D97706]" : "text-[#8B5E3C]"}
+                  ${openStates[index] ? 'text-[#D97706]' : 'text-[#8B5E3C]'}
                   hover:bg-[#FFF7E6]
                 `}
               >
@@ -98,7 +105,7 @@ export default function FAQPage() {
                 </span>
                 <span
                   className={`transition-transform duration-300 ease-in-out transform ${
-                    openStates[index] ? "rotate-90 scale-125" : "scale-100"
+                    openStates[index] ? 'rotate-90 scale-125' : 'scale-100'
                   }`}
                 >
                   <ChevronRight size={32} />
@@ -107,7 +114,7 @@ export default function FAQPage() {
 
               <ul
                 className={`list-disc list-inside mt-4 text-[#333333] italic leading-relaxed max-h-0 overflow-hidden transition-[max-height] duration-500 ease-in-out ${
-                  openStates[index] ? "max-h-96" : ""
+                  openStates[index] ? 'max-h-96' : ''
                 }`}
               >
                 {faq.answer.map((line, i) => (
