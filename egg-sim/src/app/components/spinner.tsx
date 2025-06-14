@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Item, allItems } from '../types/Item';
 
@@ -12,7 +13,7 @@ interface SpinnerProps {
 const DEFAULT_ITEM: Item = {
   id: 'default',
   name: 'Default Item',
-  icon: '/default-icon.svg',
+  icon: '/hen-skin/hen_skin_pirate.svg',
 };
 
 export default function Spinner({
@@ -88,13 +89,15 @@ export default function Spinner({
               `}
             >
               <div className="relative w-16 h-16 flex items-center justify-center">
-                <img
+                <Image
                   src={item.icon || DEFAULT_ITEM.icon}
                   alt={item.name || item.id}
-                  className="max-w-full max-h-full object-contain"
+                  className="object-contain"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src = DEFAULT_ITEM.icon!;
                   }}
+                  width={64}
+                  height={64}
                 />
                 {!spinning &&
                   winner &&

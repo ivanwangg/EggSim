@@ -1,10 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { useXP } from '../context/XPContext';
-import { useInventory } from '../context/InventoryContext';
+// import { useXP } from '../context/XPContext';
+// import { useInventory } from '../context/InventoryContext';
 import BackpackButton from '../components/backpackButton';
 
 import XPBar from '../components/xpBar';
@@ -20,17 +21,17 @@ export default function HomePage() {
   const [showOptions, setShowOptions] = useState(false);
   const [eggJumpFinished, setEggJumpFinished] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
-  const [isBackpackHovered, setIsBackpackHovered] = useState(false);
+  // const [isBackpackHovered, setIsBackpackHovered] = useState(false);
 
-  const { currentXP, maxXP, level, setCurrentXP, setCurrentLevel } = useXP();
+  // const { currentXP, maxXP, level, setCurrentXP, setCurrentLevel } = useXP();
   const [openInventory, setOpenInventory] = useState(false);
 
-  const gainXP = (val: number) => {
-    if (currentXP + val >= 100) {
-      setCurrentLevel(level + 1);
-    }
-    setCurrentXP((currentXP + val) % maxXP);
-  };
+  // const gainXP = (val: number) => {
+  //   if (currentXP + val >= 100) {
+  //     setCurrentLevel(level + 1);
+  //   }
+  //   setCurrentXP((currentXP + val) % maxXP);
+  // };
 
   const handleClick = () => {
     if (!animationStarted) {
@@ -107,12 +108,14 @@ export default function HomePage() {
       )}
       {/* Nest (Initial image of the hen nesting) */}
       <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2">
-        <img
+        <Image
           src={animationStarted ? '/nest.svg' : '/hen_nesting.svg'} // change to hen_nesting initially and to nest when animation starts
           alt="Nest"
           className="transition-all duration-1000 drop-shadow-lg"
           onClick={handleClick}
-          style={{ width: '100px', zIndex: 1 }}
+          style={{ zIndex: 1 }}
+          width={100}
+          height={100}
         />
       </div>
 
@@ -122,16 +125,17 @@ export default function HomePage() {
       {/* Egg (Appears after hen walks off screen) */}
       {eggVisible && !eggClicked && (
         <div className="absolute top-[70%] left-[50%] transform -translate-x-1/2 transition-all duration-500">
-          <img
+          <Image
             src="/egg.svg"
             alt="Egg"
             className="transition-all duration-1000 drop-shadow-lg"
             style={{
-              width: '60px',
               zIndex: 3,
               animation: 'jumpLand 1.5s ease-out forwards',
               transform: `translateX(-50%) translate(31px, 20px)`,
             }}
+            width={60}
+            height={60}
             onClick={handleEggClick}
             onAnimationEnd={handleEggJumpAnimationEnd} // Set the flag when the jump animation ends
           />
@@ -144,11 +148,12 @@ export default function HomePage() {
           className="absolute top-[70%] left-[50%] transform -translate-x-1/2"
           style={{ zIndex: 4, animation: 'slideUp 2s ease-out forwards' }}
         >
-          <img
+          <Image
             src="/egg.svg"
             alt="Egg Rising"
             className="transition-all duration-1000 drop-shadow-lg"
-            style={{ width: '70px' }}
+            width={70}
+            height={70}
           />
         </div>
       )}
@@ -164,11 +169,12 @@ export default function HomePage() {
             animationDirection: 'alternate',
           }}
         >
-          <img
+          <Image
             src="/egg.svg"
             alt="Egg Enlarging"
             className="transition-all duration-1000 drop-shadow-lg"
-            style={{ width: '100px' }}
+            width={100}
+            height={100}
           />
         </div>
       )}

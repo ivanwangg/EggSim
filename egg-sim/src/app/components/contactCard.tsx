@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface ContactCardProps {
   img: string;
   name: string;
@@ -15,10 +17,13 @@ export default function ContactCard({
 }: ContactCardProps) {
   return (
     <div className="w-full h-full flex flex-col justify-start items-center">
-      <img
+      <Image
         src={img}
-        className="w-[17rem] h-[17rem] rounded-[5rem] object-cover"
-      ></img>
+        className="rounded-[5rem] object-cover"
+        width={272}
+        height={272}
+        alt=""
+      />
       <p className="font-extrabold text-2xl my-3 text-black">{name}</p>
       <p className="italic text-black">{title}</p>
       <p className="mb-3 text-black">{email}</p>

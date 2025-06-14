@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 
 export default function FryPage() {
@@ -485,7 +486,7 @@ export default function FryPage() {
       {isEggVisible && (
         <div className="absolute top-[45.8%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-12">
           <div className="egg-slide">
-            <img src="/egg.svg" alt="Egg" className="w-10" />
+            <Image src="/egg.svg" alt="Egg" width={40} height={40} />
           </div>
         </div>
       )}
@@ -502,17 +503,22 @@ export default function FryPage() {
       )}
       {showPanSVG && (
         <div className="absolute top-[30%] poof-in z-15">
-          <img src="/pan_topview.svg" alt="Frying Pan" className="w-45" />
+          <Image
+            src="/pan_topview.svg"
+            alt="Frying Pan"
+            width={180}
+            height={180}
+          />
         </div>
       )}
       {showOilSVG && (
         <div className="absolute top-[30%] left-[46.5%] poof-in z-15">
-          <img src="/oil_bottle.svg" alt="Oil" className="w-45" />
+          <Image src="/oil_bottle.svg" alt="Oil" width={180} height={180} />
         </div>
       )}
       {showSpatulaSVG && (
         <div className="absolute top-[30%] poof-in z-50">
-          <img src="/spatula.svg" alt="Spatula" className="w-35" />
+          <Image src="/spatula.svg" alt="Spatula" width={140} height={180} />
         </div>
       )}
 
@@ -520,20 +526,32 @@ export default function FryPage() {
       {showFinalItems && (
         <>
           <div className="absolute top-[50%] left-[71.5%] z-10 poof-fall">
-            <img src="/pan_sideview.svg" alt="Side Pan" className="w-50" />
+            <Image
+              src="/pan_sideview.svg"
+              alt="Side Pan"
+              width={200}
+              height={200}
+            />
           </div>
           {showOilBottle && !showOilPourSprite && (
             <div className="absolute top-[53%] left-[80%] z-0 poof-fall">
-              <img src="/oil_bottle.svg" alt="Oil Bottle" className="w-50" />
+              <Image
+                src="/oil_bottle.svg"
+                alt="Oil Bottle"
+                width={200}
+                height={200}
+              />
             </div>
           )}
           {showSpatulaPan && !isSpatulaMove && (
             <div className="absolute top-[50%] left-[73%] z-0 poof-fall2">
               <div style={{ transform: 'rotate(40deg)' }}>
-                <img
+                <Image
                   src="/spatula_sideview.svg"
                   alt="Side Spatula"
                   className="w-45"
+                  width={180}
+                  height={180}
                 />
               </div>
             </div>
@@ -615,26 +633,28 @@ export default function FryPage() {
 
       {showEggSlam && (
         <div className="absolute top-[50%] left-[60%] z-50 animate-egg-slam">
-          <img src="/egg.svg" alt="Egg Slam" className="w-10" />
+          <Image src="/egg.svg" alt="Egg Slam" width={40} height={40} />
         </div>
       )}
 
       {showEggPoof && (
         <div className="absolute top-[50%] left-[60%] z-50 egg-poof-out">
-          <img
+          <Image
             src="/fry/eggshell_cracked_together.svg"
             alt="Poof Effect"
-            className="w-10"
+            width={40}
+            height={40}
           />
         </div>
       )}
 
       {showEggCracked && (
         <div className="absolute top-[50%] left-[75%] rotate-90 z-50">
-          <img
+          <Image
             src="/fry/eggshell_cracked_together.svg"
             alt="Poof Effect"
-            className="w-10"
+            width={40}
+            height={40}
           />
         </div>
       )}
@@ -650,10 +670,11 @@ export default function FryPage() {
           className="absolute top-[48.5%] left-[72.5%] z-0 spatula-animation"
           style={{ transform: 'rotate(0deg)' }}
         >
-          <img
+          <Image
             src="/spatula_sideview.svg"
             alt="Side Spatula"
-            className="w-45"
+            width={180}
+            height={180}
           />
         </div>
       )}
@@ -662,20 +683,22 @@ export default function FryPage() {
       {isSpatulaMove && (
         <div className="absolute top-[58%] left-[75%] z-0 wrapper">
           <div className="flip-element">
-            <img
+            <Image
               src="/fry/egg_cracked.svg"
               alt="Flipping Egg"
-              className="w-10"
+              width={40}
+              height={40}
             />
           </div>
         </div>
       )}
       {showResult && (
         <div className="absolute top-[25%] left-[69%] z-50 zoom-in-out pulse-glow">
-          <img
-            src={resultSVG || undefined}
+          <Image
+            src={resultSVG}
             alt="Final Egg Result"
-            className="w-50"
+            width={200}
+            height={200}
           />
         </div>
       )}
