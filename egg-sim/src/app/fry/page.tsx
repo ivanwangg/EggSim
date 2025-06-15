@@ -694,7 +694,7 @@ export default function FryPage() {
       {showResult && (
         <div className="absolute top-[25%] left-[69%] z-50 zoom-in-out pulse-glow">
           <Image
-            src={resultSVG}
+            src={resultSVG || "/egg.svg"}
             alt="Final Egg Result"
             width={200}
             height={200}

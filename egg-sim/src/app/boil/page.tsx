@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 export default function BoilPage() {
   // step 1
@@ -315,12 +316,6 @@ export default function BoilPage() {
     typeTitle();
   }, [showResult, cookTime]);
 
-
-
-
-
-
-
   function handleNextClick() {
     setClickedNext(true);
     setShowNextButton(false);
@@ -392,19 +387,20 @@ export default function BoilPage() {
 
   return (
     <div
-      className={`relative w-full h-screen flex items-center justify-center flex-col overflow-hidden transition-transform duration-[2000ms] ease-in-out ${backgroundStage === 3
-        ? 'scale-100'
-        : clickedNext && cookTime
+      className={`relative w-full h-screen flex items-center justify-center flex-col overflow-hidden transition-transform duration-[2000ms] ease-in-out ${
+        backgroundStage === 3
+          ? 'scale-100'
+          : clickedNext && cookTime
           ? 'scale-[2.0]'
           : step === 4
-            ? 'scale-[1.5]'
-            : 'scale-100'
-        } opacity-100`}
+          ? 'scale-[1.5]'
+          : 'scale-100'
+      } opacity-100`}
       style={{
         transformOrigin: step === 4 || clickedNext ? '100% center' : 'center',
       }}
     >
-      {/*  Backgrounds  */}
+      {/* backgrounds: 0 is kitchen, 1 is sink off, 2 is sink on, 3 is stove */}
       <div
         className="absolute inset-0 z-0 transition-opacity duration-1000 ease-in-out"
         style={{
@@ -441,20 +437,21 @@ export default function BoilPage() {
           backgroundPosition: 'center',
         }}
       />
-
+  
       {showResult && (
         <div className="absolute inset-0 z-40 backdrop-blur-sm bg-black/20 pointer-events-none" />
       )}
-
-      {/* step 1 */}
+  
+      {/* initial egg slide down */}
       {isEggVisible && (
         <div className="absolute top-[45.8%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-12">
           <div className="egg-slide">
-            <img src="/egg.svg" alt="Egg" className="w-10" />
+            <Image src="/egg.svg" alt="Egg" width={40} height={40} className="w-10" />
           </div>
         </div>
       )}
-
+  
+      {/* step 1 */}
       {!hideEverything && (
         <>
           {isPromptVisible && (
@@ -464,27 +461,28 @@ export default function BoilPage() {
               </h1>
             </div>
           )}
-
+  
           {step === 1 && (
             <h1 className="text-2xl font-bold glow-effect2 zoom-in-out mb-120 pixelated-text">
               1. A boiling pot
             </h1>
           )}
-
+  
           {showPotSVG && (
             <div className="absolute top-[30%] poof-in z-15">
-              <img src="/boil/pot_v2_lid_on.svg" alt="Boiling Pot" className="w-45" />
+              <Image src="/boil/pot_v2_lid_on.svg" alt="Boiling Pot" width={180} height={180} className="w-45" />
             </div>
           )}
-
+  
           {showFinalItems && (
             <div className="absolute top-[54%] left-[73.5%] z-10 poof-fall">
-              <img src="/boil/pot_v2_lid_on.svg" alt="Pot" className="w-35" />
+              <Image src="/boil/pot_v2_lid_on.svg" alt="Pot" width={140} height={140} className="w-35" />
             </div>
           )}
         </>
       )}
-
+  
+      {/* step 2*/}
       {showStep2Prompt && !clickedNext && (
         <div className="absolute top-[30%] left-[53%] text-center z-50">
           <h1 className="text-1xl font-bold glow-effect2 zoom-in-out pixelated-text">
@@ -505,8 +503,8 @@ export default function BoilPage() {
             {cookTime < 1
               ? '< 1 minute'
               : cookTime > 10
-                ? '> 10 minutes'
-                : `${cookTime.toFixed(1)} minutes`}
+              ? '> 10 minutes'
+              : `${cookTime.toFixed(1)} minutes`}
           </p>
           <input
             type="range"
@@ -521,113 +519,110 @@ export default function BoilPage() {
         </div>
       )}
 
-      {showNextButton && (
-        <button
-          className="absolute top-[52%] left-[66.5%] z-50 bg-blue-500 hover:bg-blue-700 text-white font-cursive font-semibold py-2 px-5 rounded-lg shadow-md shadow-blue-400/50 border-2 border-blue-800 transition-transform active:scale-95 boil-button pixelated-text"
-          onClick={handleNextClick}
-        >
-          Go boil
-        </button>
-      )}
+    {showNextButton && (
+      <button
+        className="absolute top-[52%] left-[66.5%] z-50 bg-blue-500 hover:bg-blue-700 text-white font-cursive font-semibold py-2 px-5 rounded-lg shadow-md shadow-blue-400/50 border-2 border-blue-800 transition-transform active:scale-95 boil-button pixelated-text"
+        onClick={handleNextClick}
+      >
+        Go boil
+      </button>
+    )}
 
-      {showBackButton && (
-        <button
-          className="absolute top-[62%] left-[71%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2 pixelated-text"
-          onClick={handleBackClick}
-        >
-          Back
-        </button>
-      )}
+    {showBackButton && (
+      <button
+        className="absolute top-[62%] left-[71%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2 pixelated-text"
+        onClick={handleBackClick}
+      >
+        Back
+      </button>
+    )}
 
-
-      {showPotWaterSVG && (
+    {showPotWaterSVG && (
+      <>
         <div className="absolute top-[30%] poof-in z-15">
-          <img src="/boil/pot_v2_water.svg" alt="Pot Filled With Water" className="w-45" />
+          <Image src="/boil/pot_v2_water.svg" alt="Pot Filled With Water" width={180} height={180} className="w-45" />
         </div>
-      )}
-
-      {showPotWaterSVG && (
         <h1 className="text-2xl font-bold glow-effect2 zoom-in-out mb-120 pixelated-text">
           2. Pot filled with water
         </h1>
-      )}
+      </>
+    )}
 
-      {/* faucet transition portions*/}
-      {typedText && step == 3 && (
-        <div className="absolute top-[28%] left-[50%] transform -translate-x-1/2 z-50 text-center">
-          <h1 className="text-xl font-bold pixelated-text zoom-in-out glow-effect2">{typedText}</h1>
-        </div>
-      )}
+   
+    {typedText && step === 3 && (
+      <div className="absolute top-[28%] left-[50%] transform -translate-x-1/2 z-50 text-center">
+        <h1 className="text-xl font-bold pixelated-text zoom-in-out glow-effect2">{typedText}</h1>
+      </div>
+    )}
 
-      {showWaterPot && (
-        <div className="absolute top-[53%] left-[73.5%] z-10 poof-fall">
-          <img src="/boil/pot_v2_water.svg" alt="Pot with Water" className="w-35" />
-        </div>
-      )}
+    {showWaterPot && (
+      <div className="absolute top-[53%] left-[73.5%] z-10 poof-fall">
+        <Image src="/boil/pot_v2_water.svg" alt="Pot with Water" width={140} height={140} className="w-35" />
+      </div>
+    )}
 
-      {/* instructional portions of boiling the egg */}
-      {typedText && clickedNext && (
-        <div
-          className="absolute top-[35%] left-[64%] w-[20%] p-4 rounded-md font-mono z-30 pixelated-text bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2"
-          style={{ fontSize: '0.6rem', lineHeight: '1.8' }}
-        >
-          {typedText}
-        </div>
-      )}
+    {/* typewriter instructions */}
+    {typedText && clickedNext && (
+      <div
+        className="absolute top-[35%] left-[64%] w-[20%] p-4 rounded-md font-mono z-30 pixelated-text bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2"
+        style={{ fontSize: '0.6rem', lineHeight: '1.8' }}
+      >
+        {typedText}
+      </div>
+    )}
 
-      {showEggDrop && (
-        <div className="absolute top-[53%] left-[75%] z-100 egg-drop">
-          <img src="/egg.svg" alt="Egg Dropping" className="w-10" />
-        </div>
-      )}
+    {/* egg drop in water part */}
+    {showEggDrop && (
+      <div className="absolute top-[53%] left-[75%] z-100 egg-drop">
+        <Image src="/egg.svg" alt="Egg Dropping" width={40} height={40} className="w-10" />
+      </div>
+    )}
 
-      {showSplash && (
-        <div className="absolute top-[57%] left-[75%] z-100 splash-animate">
-          <img src="/boil/splash.svg" alt="Splash Effect" className="w-12" />
-        </div>
-      )}
+    {showSplash && (
+      <div className="absolute top-[57%] left-[75%] z-100 splash-animate">
+        <Image src="/boil/splash.svg" alt="Splash Effect" width={48} height={48} className="w-12" />
+      </div>
+    )}
 
-      {showBigWaterPot && (
-        <div className="absolute top-[15%] left-[60%] poof-in z-15">
-          <img src="/boil/pot_v2_water.svg" alt="Pot Filled With Water" className="w-150" />
-        </div>
-      )}
+    {showBigWaterPot && (
+      <div className="absolute top-[15%] left-[60%] poof-in z-15">
+        <Image src="/boil/pot_v2_water.svg" alt="Big Pot With Water" width={240} height={240} className="w-150" />
+      </div>
+    )}
 
-      {showBoilingPot && (
-        <div className="absolute top-[53%] left-[73.5%] z-10 poof-fall">
-          <img src="/boil/pot_v2_boiling_water.svg" alt="Pot with Water" className="w-35" />
+    {/* egg in pot transition part */}
+    {showBoilingPot && (
+      <div className="absolute top-[53%] left-[73.5%] z-10 poof-fall">
+        <Image src="/boil/pot_v2_boiling_water.svg" alt="Boiling Water" width={140} height={140} className="w-35" />
+      </div>
+    )}
+    {showBoilingEggPot && (
+      <div className="absolute top-[53%] left-[73.5%] z-10 poof-fall">
+        <Image src="/boil/pot_v2_boiling_egg.svg" alt="Boiling Egg" width={140} height={140} className="w-35" />
+      </div>
+    )}
+    {showPotWithLid && (
+      <div className="absolute top-[53%] left-[73.5%] z-10 poof-fall">
+        <div className={isShaking ? 'shake-animation' : ''}>
+          <Image src="/boil/pot_v2_lid_on.svg" alt="Pot with Lid" width={140} height={140} className="w-35" />
         </div>
-      )}
-      {showBoilingEggPot && (
-        <div className="absolute top-[53%] left-[73.5%] z-10 poof-fall">
-          <img src="/boil/pot_v2_boiling_egg.svg" alt="Pot with Water" className="w-35" />
-        </div>
-      )}
+      </div>
+    )}
 
-      {showPotWithLid && (
-        <div className="absolute top-[53%] left-[73.5%] z-10 poof-fall">
-          <div className={isShaking ? 'shake-animation' : ''}>
-            <img src="/boil/pot_v2_lid_on.svg" alt="Pot with Lid" className="w-35" />
-          </div>
-        </div>
-      )}
-
-      {showResult && (
+    {/* results*/}
+    {showResult && (
+      <>
         <div className="absolute top-[25%] left-[69%] z-50 zoom-in-out pulse-glow">
-          <img src={resultSVG || undefined} alt="Final Egg Result" className="w-50" />
+          <Image src={resultSVG || '/egg.svg'} alt="Final Egg Result" width={200} height={200} className="w-50" />
         </div>
-      )}
-      {showResult && (
-        <div className="absolute top-[45%] left-[73.5%]  transform -translate-x-1/2 z-50 text-center max-w-[300px]">
-          <p className="text-lg font-extrabold text-yellow-200 glow-effect pixelated-text">
-            {typedTitle}
-          </p>
+        <div className="absolute top-[45%] left-[73.5%] transform -translate-x-1/2 z-50 text-center max-w-[300px]">
+          <p className="text-lg font-extrabold text-yellow-200 glow-effect pixelated-text">{typedTitle}</p>
           <p className="text-xs font-semibold text-white pixelated-text backdrop-blur-md bg-black/40 p-3 mt-2 rounded-lg shadow-lg leading-snug whitespace-pre-line">
             {typedDescription}
           </p>
         </div>
-      )}
-
-    </div>
+      </>
+    )}
+  </div>
   );
 }
