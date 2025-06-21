@@ -34,7 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen text-black`}
       >
         <NavBar />
         <ClientProvider>
