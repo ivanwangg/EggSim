@@ -31,7 +31,7 @@ export default function NotFound() {
         className="mt-5 rounded-2xl px-3 hover:text-[#FBBF24]"
         onClick={() => router.push('/')}
       >
-        <p className="animate-bounce">Click me to return to the main page!</p>
+        <p className="animate-bounce text-black">Click me to return to the main page!</p>
       </button>
     </div>
   );
