@@ -46,8 +46,14 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
+<<<<<<< HEAD
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen `}>
         
+=======
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen text-black`}
+      >
+>>>>>>> 87a4ddf (Changed text color to black)
         <NavBar />
         <ClientProvider>
           <ScrollManager /> 
