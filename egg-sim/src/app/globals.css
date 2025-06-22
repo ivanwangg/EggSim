@@ -513,7 +513,7 @@ button.no-hover:hover {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  animation: oilPourCycle 1.5s steps(5) forwards;
+  animation: oilPourCycle 2s steps(5) forwards;
 }
 
 @keyframes flipAnimation {
@@ -535,7 +535,7 @@ button.no-hover:hover {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-60px); 
+    transform: translateY(-60px);
   }
 }
 
@@ -555,7 +555,7 @@ button.no-hover:hover {
     transform: translateX(0);
   }
   50% {
-    transform: translateX(30px);
+    transform: translateX(-30px);
   }
   100% {
     transform: translateX(0);
@@ -567,16 +567,67 @@ button.no-hover:hover {
   0% {
     transform: rotate(40deg);
   }
-  100% {
+  50% {
     transform: rotate(90deg) translateY(-40px);
+  }
+  100% {
+    transform: rotate(40deg) translateY(2px);
+  }
+  100.1% {
+    transform: rotate(40deg) translateY(2px);
   }
 }
 
 .spatula-animation {
   animation:
-    poofIn 1s ease-in-out,
-    spatulaMove 1s ease-in-out,
-    spatulaFlipUp 0.5s ease-in-out 1s forwards;
+    spatulaMove 1s ease-in-out infinite,
+    spatulaFlipUp 0.5s ease-in-out 1s forwards; /* flips once and stays in the final position */
+}
+
+@keyframes slam {
+  0% {
+    transform: scale(5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.slam {
+  animation: slam 0.6s ease-out forwards;
+}
+
+@keyframes rotate-shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(180deg) translateY(-5px);
+  }
+  40% {
+    transform: rotate(180deg) translateY(5px);
+  }
+  60% {
+    transform: rotate(180deg) translateY(-5px);
+  }
+  80% {
+    transform: rotate(180deg) translateY(5px);
+  }
+  100% {
+    transform: rotate(180deg) translateY(0);
+  }
+}
+
+.rotate-shake {
+  animation: rotate-shake 1.5s ease-in-out forwards;
 }
 
 // boil page styles (same as fry, but blue)
@@ -585,27 +636,27 @@ boil-slider::-webkit-slider-thumb {
   appearance: none;
   height: 25px;
   width: 25px;
-  border-radius: 50%; 
+  border-radius: 50%;
   background: radial-gradient(circle, #007acc 0%, #005f99 80%, #004080 100%);
-  drop-shadow: 0 0 10px rgba(0, 85, 255, 0.8); 
+  drop-shadow: 0 0 10px rgba(0, 85, 255, 0.8);
   transition: box-shadow 0.2s ease-in-out;
 }
 
 .boil-slider::-moz-range-thumb {
   height: 25px;
   width: 25px;
-  border-radius: 50%; 
+  border-radius: 50%;
   background: radial-gradient(circle, #007acc 0%, #005f99 80%, #004080 100%);
-  drop-shadow: 0 0 10px rgba(0, 85, 255, 0.8); 
+  drop-shadow: 0 0 10px rgba(0, 85, 255, 0.8);
   transition: box-shadow 0.2s ease-in-out;
 }
 
 .boil-slider::-webkit-slider-thumb:hover {
-  drop-shadow: 0 0 20px rgba(0, 85, 255, 1); 
+  drop-shadow: 0 0 20px rgba(0, 85, 255, 1);
 }
 
 .boil-slider::-moz-range-thumb:hover {
-  drop-shadow: 0 0 20px rgba(0, 85, 255, 1); 
+  drop-shadow: 0 0 20px rgba(0, 85, 255, 1);
 }
 
 @keyframes eggDrop {
@@ -653,7 +704,6 @@ boil-slider::-webkit-slider-thumb {
     opacity: 0;
   }
 }
-
 
 .pot-flash-container {
   position: relative;
@@ -707,7 +757,6 @@ boil-slider::-webkit-slider-thumb {
   }
 }
 
-
 .w-\[150px\] {
   width: 150px;
   height: 150px;
@@ -723,7 +772,8 @@ boil-slider::-webkit-slider-thumb {
 }
 
 @keyframes fadeSwitch {
-  0%, 40% {
+  0%,
+  40% {
     opacity: 1;
     background-image: url('/boil/pot_v2_water.svg');
   }
@@ -740,11 +790,24 @@ boil-slider::-webkit-slider-thumb {
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
-  20%, 40%, 60%, 80% { transform: translateX(3px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-3px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(3px);
+  }
 }
-
 
 .shake-animation {
   animation: shake 1s ease-in-out infinite;

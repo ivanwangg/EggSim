@@ -12,6 +12,8 @@ export default function FryPage() {
   const [showPanSVG, setShowPanSVG] = useState(false);
   const [showOilSVG, setShowOilSVG] = useState(false);
   const [showSpatulaSVG, setShowSpatulaSVG] = useState(false);
+  const [showSaltSVG, setShowSaltSVG] = useState(false);
+  const [showPepperSVG, setShowPepperSVG] = useState(false);
   const [showFinalItems, setShowFinalItems] = useState(false);
   const [showOilBottle, setShowOilBottle] = useState(true);
   const [showSpatulaPan, setShowSpatulaPan] = useState(true);
@@ -41,17 +43,25 @@ export default function FryPage() {
 
   //egg flipping portion
   const [flipIntro, setFlipIntro] = useState(false);
-  const [showResult, setShowResult] = useState(false); // To show the result SVG
-  const [resultSVG, setResultSVG] = useState(''); // Store the final egg result SVG path
+  const [showResult, setShowResult] = useState(false); // to show the result SVG
+  const [resultSVG, setResultSVG] = useState(''); // store the final egg result SVG path
 
   //spatula movement portion
-  const [isSpatulaMove, setIsSpatulaMove] = useState(false); // Tracks if spatula is moving
+  const [isSpatulaMove, setIsSpatulaMove] = useState(false);
   const [flipIndex, setFlipIndex] = useState(0);
   const [flipCount, setFlipCount] = useState(0);
 
+  const [isSpatulaDone, setIsSpatulaDone] = useState(false);
   //results section
   const [typedTitle, setTypedTitle] = useState('');
   const [typedDescription, setTypedDescription] = useState('');
+
+  // seasoning section
+  const [startSeasoningIntro, setStartSeasoningIntro] = useState(false);
+  const [showSaltShaker, setShowSaltShaker] = useState(false);
+  const [showSaltTable, setShowSaltTable] = useState(true);
+  const [showPepperShaker, setShowPepperShaker] = useState(false);
+  const [showPepperTable, setShowPepperTable] = useState(true);
 
   // this will be the cooking instructions. Temporarily using placeholder for the non edge cases. Plan to make less than 1 minute the only edge case in the future.
   function getInstructionForTime(time: number) {
@@ -91,13 +101,21 @@ export default function FryPage() {
     } else if (step === 3) {
       setShowPanSVG(false);
       setShowOilSVG(true);
-      next = setTimeout(() => setStep(5), 4000);
-    } else if (step === 5) {
+      next = setTimeout(() => setStep(4), 4000);
+    } else if (step === 4) {
       setShowOilSVG(false);
       setShowSpatulaSVG(true);
+      next = setTimeout(() => setStep(5), 4000);
+    } else if (step === 5) {
+      setShowSpatulaSVG(false);
+      setShowSaltSVG(true);
+      next = setTimeout(() => setStep(6), 4000);
+    } else if (step === 6) {
+      setShowSaltSVG(false);
+      setShowPepperSVG(true);
       next = setTimeout(() => {
         setStep(7);
-        setShowSpatulaSVG(false);
+        setShowPepperSVG(false);
         setShowFinalItems(true);
       }, 4000);
     } else if (step === 7) {
@@ -143,15 +161,31 @@ export default function FryPage() {
     setShowBackButton(false);
   }, [clickedNext, cookTime]);
 
+  /*
+      const oilIntro = ' First step is to pour the bottle of olive oil on the pan! This is crucial because the oil creates a non-stick surface for the egg, allowing it to cook evenly without sticking to the pan. Plus, it adds flavor and helps regulate the cooking temperature, so your egg doesn’t burn. ';
+      const eggIntro = ' Second step is to crack the egg! This step is important because you need to introduce the egg into the pan, and cracking it correctly ensures the egg white and yolk stay intact. A clean crack also minimizes any shell fragments from getting into your cooking. ';
+      const letSitIntro = ' Now, let the egg sit on the pan for a moment to cook properly. It’s important to give the egg time to firm up and cook the white completely before flipping it. Patience is key for the perfect egg! ';
+      const flipIntro = ' Third step is to flip the egg with your spatula! Flipping the egg is necessary to ensure it cooks evenly on both sides. This step also gives you control over the egg’s doneness, whether you like it runny or fully cooked. A careful flip prevents breaking the yolk or overcooking the egg. ';
+      */
   // typewriter effect for instructions. for some reason, you have to add a space in front, or else it will skip a letter. i don't really know why.
   useEffect(() => {
     if (!clickedNext) return;
 
     if (cookTime >= 1 && cookTime <= 10) {
+      /* test intros for faster speed
+      const oilIntro = ' First step  ';
+      const eggIntro = ' Second step  ';
+      const letSitIntro = ' Now, let ';
+      const flipIntro = ' Third step  ';
+      */
       const oilIntro =
-        ' First step is to pour the bottle of olive oil on the pan! ';
-      const eggIntro = ' Second step is to crack the egg! ';
-      const flipIntro = ' Third step is to flip the egg with your spatula! ';
+        ' First step is to pour the bottle of olive oil on the pan! This is crucial because the oil creates a non-stick surface for the egg, allowing it to cook evenly without sticking to the pan. ';
+      const eggIntro =
+        ' Second step is to crack the egg! This step is important because you need to introduce the egg into the pan, and cracking it correctly ensures the egg white and yolk stay intact. ';
+      const letSitIntro =
+        ' Now, let the egg sit on the pan for a moment to cook properly. It’s important to give the egg time to firm up and cook the white completely before flipping it. Patience is key for the perfect egg! ';
+      const flipIntro =
+        ' Third step is to flip the egg with your spatula! Flipping the egg is necessary to ensure it cooks evenly on both sides. This step also gives you control over the egg’s doneness, whether you like it runny or fully cooked. ';
 
       setTypedText('');
       indexRef.current = 0;
@@ -199,32 +233,49 @@ export default function FryPage() {
                       setShowEggCracked(false);
                       setStartAnimation(true);
 
-                      // flip step typing
+                      // wait intro
                       setTypedText('');
                       indexRef.current = 0;
-
-                      const flipTypingInterval = setInterval(() => {
-                        if (indexRef.current < flipIntro.length - 1) {
+                      const sitTypingInterval = setInterval(() => {
+                        if (indexRef.current < letSitIntro.length - 1) {
                           indexRef.current++;
                           setTypedText(
-                            (prev) => prev + flipIntro[indexRef.current]
+                            (prev) => prev + letSitIntro[indexRef.current]
                           );
                         } else {
-                          clearInterval(flipTypingInterval);
+                          clearInterval(sitTypingInterval);
+
+                          // let the egg sit for 1500ms before flipping
                           setTimeout(() => {
-                            setIsSpatulaMove(true);
-                          }, 600);
-                          setFlipIntro(true);
+                            // flip step typing
+                            setTypedText('');
+                            indexRef.current = 0;
+
+                            const flipTypingInterval = setInterval(() => {
+                              if (indexRef.current < flipIntro.length - 1) {
+                                indexRef.current++;
+                                setTypedText(
+                                  (prev) => prev + flipIntro[indexRef.current]
+                                );
+                              } else {
+                                clearInterval(flipTypingInterval);
+                                setTimeout(() => {
+                                  setIsSpatulaMove(true);
+                                }, 600);
+                                setFlipIntro(true);
+                              }
+                            }, 60); // slower typing speed
+                          }, 1500); // Let the egg sit for 1.5 seconds before flipping
                         }
-                      }, 50);
+                      }, 60); // slower typing speed for the "let it sit" text
                     }, 600);
                   }, 800);
                 }, 500);
               }
-            }, 50);
+            }, 60);
           }, 1000);
         }
-      }, 50);
+      }, 60);
     }
 
     // <1 or >10 cooking time
@@ -248,7 +299,7 @@ export default function FryPage() {
           }
           setShowBackButton(true);
         }
-      }, 50);
+      }, 75);
 
       return () => clearInterval(interval);
     }
@@ -275,6 +326,9 @@ export default function FryPage() {
     setAnimationKey((prev) => prev + 1);
     setTypedTitle('');
     setTypedDescription('');
+    setStartSeasoningIntro(false);
+    setShowSaltTable(true);
+    setShowPepperTable(true);
   }
 
   useEffect(() => {
@@ -307,29 +361,91 @@ export default function FryPage() {
   useEffect(() => {
     if (flipCount === 0 || flipIndex >= flipCount) return;
 
+    setIsSpatulaDone(true);
     setIsSpatulaMove(true);
 
-    const duration = 3500; // time per flip
+    const duration = 4500; // time per flip
 
     const timer = setTimeout(() => {
       setIsSpatulaMove(false);
 
-      setTimeout(() => {
-        setFlipIndex((prev) => prev + 1);
-      }, 200); // brief delay between flips
+      // delay before moving to the next flip
+      setFlipIndex((prev) => prev + 1);
     }, duration);
 
     return () => clearTimeout(timer);
   }, [flipIndex, flipCount]);
 
-  // set show result to be true if flip process is done
+  // after all flips are done
   useEffect(() => {
     if (flipIndex === flipCount && flipCount > 0) {
+      // show result after a brief delay
+      setIsSpatulaDone(false);
       setTimeout(() => {
-        setShowResult(true);
+        setStartSeasoningIntro(true);
       }, 800);
     }
   }, [flipIndex, flipCount]);
+
+  useEffect(() => {
+    if (!startSeasoningIntro) return;
+
+    const seasoningIntro =
+      ' The last thing in our frying process is going to be seasoning! Nobody likes things unseasoned unless you are an unseasoned person! So, we’ll first start with salt!';
+    const pepperIntro =
+      ' Now, we are going to add a dash of pepper for the final touch! ';
+    setTypedText('');
+    indexRef.current = 0;
+
+    const seasoningTypingInterval = setInterval(() => {
+      if (indexRef.current < seasoningIntro.length - 1) {
+        indexRef.current++;
+        setTypedText((prev) => prev + seasoningIntro[indexRef.current]);
+      } else {
+        clearInterval(seasoningTypingInterval);
+        setShowSaltTable(false);
+        setShowSaltShaker(true);
+
+        setTimeout(() => {
+          setTimeout(() => {
+            setTimeout(() => {
+              setShowSaltShaker(false);
+              setShowSaltTable(true);
+
+              // start pepper typing effect after salt shaker animation
+              setTypedText('');
+              indexRef.current = 0;
+              const pepperTypingInterval = setInterval(() => {
+                if (indexRef.current < pepperIntro.length - 1) {
+                  indexRef.current++;
+                  setTypedText((prev) => prev + pepperIntro[indexRef.current]);
+                } else {
+                  clearInterval(pepperTypingInterval);
+                  setShowPepperTable(false);
+
+                  // show pepper shaker animation after typing effect
+                  setShowPepperShaker(true);
+
+                  setTimeout(() => {
+                    setShowPepperShaker(false);
+                    setShowPepperTable(true);
+
+                    setTimeout(() => {
+                      setShowSaltTable(true);
+                      setShowPepperTable(true);
+                      setShowResult(true);
+                    }, 1000);
+                  }, 1000);
+                }
+              }, 60);
+            }, 500);
+          }, 300);
+        }, 300);
+      }
+    }, 60);
+
+    return () => clearInterval(seasoningTypingInterval);
+  }, [startSeasoningIntro]);
 
   useEffect(() => {
     // only give results if show result is true. helps to prevent bugs where clicking on the slider causes it to glitch out and display the results even if you didn't click fry.
@@ -491,33 +607,71 @@ export default function FryPage() {
       )}
 
       {/* Necessary items section*/}
-      {(step === 1 || step === 3 || step === 5) && (
+      {(step === 1 || step === 3 || step === 4 || step === 5 || step === 6) && (
         <h1 className="text-2xl font-bold glow-effect2 zoom-in-out mb-120 pixelated-text">
           {step === 1
             ? '1. A frying pan'
             : step === 3
               ? '2. Some oil'
-              : '3. A spatula'}
+              : step == 4
+                ? '3. A spatula'
+                : step == 5
+                  ? '4. A salt shaker'
+                  : '5. A pepper shaker'}
         </h1>
       )}
       {showPanSVG && (
-        <div className="absolute top-[30%] poof-in z-15">
-          <Image
-            src="/pan_topview.svg"
-            alt="Frying Pan"
-            width={180}
-            height={180}
-          />
+        <div className="pulse-glow absolute top-[30%] z-15">
+          <div className="poof-in">
+            <Image
+              src="/pan_topview.svg"
+              alt="Frying Pan"
+              width={180}
+              height={180}
+            />
+          </div>
         </div>
       )}
+
       {showOilSVG && (
-        <div className="absolute top-[30%] left-[46.5%] poof-in z-15">
-          <Image src="/oil_bottle.svg" alt="Oil" width={180} height={180} />
+        <div className="pulse-glow absolute top-[30%] left-[46.5%] z-15">
+          <div className="poof-in">
+            <Image src="/oil_bottle.svg" alt="Oil" width={180} height={180} />
+          </div>
         </div>
       )}
+
       {showSpatulaSVG && (
-        <div className="absolute top-[30%] poof-in z-50">
-          <Image src="/spatula.svg" alt="Spatula" width={140} height={180} />
+        <div className="pulse-glow absolute top-[30%] z-50">
+          <div className="poof-in">
+            <Image src="/spatula.svg" alt="Spatula" width={140} height={180} />
+          </div>
+        </div>
+      )}
+
+      {showSaltSVG && (
+        <div className="pulse-glow absolute top-[30%] z-15">
+          <div className="poof-in">
+            <Image
+              src="/fry/salt_shaker.svg"
+              alt="Salt Shaker"
+              width={70}
+              height={70}
+            />
+          </div>
+        </div>
+      )}
+
+      {showPepperSVG && (
+        <div className="pulse-glow absolute top-[30%] z-15">
+          <div className="poof-in">
+            <Image
+              src="/fry/pepper_shaker.svg"
+              alt="Pepper Shaker"
+              width={70}
+              height={70}
+            />
+          </div>
         </div>
       )}
 
@@ -542,7 +696,7 @@ export default function FryPage() {
               />
             </div>
           )}
-          {showSpatulaPan && !isSpatulaMove && (
+          {showSpatulaPan && !isSpatulaDone && (
             <div className="absolute top-[50%] left-[73%] z-0 poof-fall2">
               <div style={{ transform: 'rotate(40deg)' }}>
                 <Image
@@ -553,6 +707,27 @@ export default function FryPage() {
                   height={180}
                 />
               </div>
+            </div>
+          )}
+          {showSaltTable && !showSaltShaker && (
+            <div className="absolute top-[65.2%] left-[87%] z-0 poof-fall">
+              <Image
+                src="/fry/salt_shaker.svg"
+                alt="Salt Shaker"
+                width={30}
+                height={30}
+              />
+            </div>
+          )}
+
+          {showPepperTable && !showPepperShaker && (
+            <div className="absolute top-[65.2%] left-[88%] z-0 poof-fall">
+              <Image
+                src="/fry/pepper_shaker.svg"
+                alt="Pepper Shaker"
+                width={30}
+                height={30}
+              />
             </div>
           )}
         </>
@@ -599,7 +774,7 @@ export default function FryPage() {
       {/* Typewriter instructions for cooking time */}
       {typedText && clickedNext && (
         <div
-          className="absolute top-[35%] left-[64%] w-[20%] p-4 rounded-md font-mono z-30 pixelated-text bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2"
+          className="absolute top-[32%] left-[64%] w-[20%] p-4 rounded-md font-mono z-30 pixelated-text bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2"
           style={{ fontSize: '0.6rem', lineHeight: '1.8' }}
         >
           {typedText}
@@ -616,10 +791,10 @@ export default function FryPage() {
         </button>
       )}
 
-      {/* Back button for going back when you choose an invalid time (currently works as well for normal times since they are not implemented yet) */}
+      {/* Back button for going back */}
       {showBackButton && (
         <button
-          className="absolute top-[62%] left-[71%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2 pixelated-text"
+          className="absolute top-[62%] left-[72%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2 pixelated-text"
           onClick={handleBackClick}
         >
           Back
@@ -627,7 +802,9 @@ export default function FryPage() {
       )}
 
       {showOilPourSprite && (
-        <div className="absolute top-[50%] left-[73%] z-0 w-[56px] h-[64px] oil-pour-animation" />
+        <div className=" absolute top-[50%] left-[73%] poof-in">
+          <div className="absolute top-[50%] left-[73%] z-0 w-[56px] h-[64px] oil-pour-animation" />
+        </div>
       )}
 
       {showEggSlam && (
@@ -666,7 +843,7 @@ export default function FryPage() {
 
       {isSpatulaMove && (
         <div
-          className="absolute top-[48.5%] left-[72.5%] z-0 spatula-animation"
+          className="absolute top-[48.5%] left-[73%] z-0 spatula-animation"
           style={{ transform: 'rotate(0deg)' }}
         >
           <Image
@@ -691,18 +868,56 @@ export default function FryPage() {
           </div>
         </div>
       )}
-      {showResult && (
-        <div className="absolute top-[25%] left-[69%] z-50 zoom-in-out pulse-glow">
+      {/* seasoning shake animation */}
+      {showSaltShaker && (
+        <div
+          className="absolute top-[50%] left-[75.5%] z-10 rotate-shake poof-in"
+          style={{
+            transformOrigin: 'center top',
+            transition: 'transform 0.5s ease-in-out',
+          }}
+        >
           <Image
-            src={resultSVG || "/egg.svg"}
-            alt="Final Egg Result"
-            width={200}
-            height={200}
+            src="/fry/salt_shaker.svg"
+            alt="Salt Shaker"
+            width={30}
+            height={30}
           />
         </div>
       )}
+
+      {showPepperShaker && (
+        <div
+          className="absolute top-[50%] left-[75.5%] z-10 rotate-shake poof-in" // going to add a conditional in the future to make sure poof in effects work with rotate shake
+          style={{
+            transformOrigin: 'center top',
+            transition: 'transform 0.5s ease-in-out',
+          }}
+        >
+          <Image
+            src="/fry/pepper_shaker.svg"
+            alt="Pepper Shaker"
+            width={30}
+            height={30}
+          />
+        </div>
+      )}
+
       {showResult && (
-        <div className="absolute top-[45%] left-[73.5%]  transform -translate-x-1/2 z-50 text-center max-w-[250px]">
+        <div className="absolute top-[25%] left-[70%] z-50 zoom-in-out pulse-glow">
+          <div className="slam">
+            <Image
+              src={resultSVG || '/fry/egg_cracked.svg'}
+              alt="Final Egg Result"
+              width={200}
+              height={200}
+            />
+          </div>
+        </div>
+      )}
+
+      {showResult && (
+        <div className="absolute top-[45%] left-[75%]  transform -translate-x-1/2 z-50 text-center max-w-[250px]">
           <p className="text-lg font-extrabold text-yellow-200 glow-effect pixelated-text">
             {typedTitle}
           </p>
