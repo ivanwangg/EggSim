@@ -7,27 +7,47 @@ export interface Item {
 export const allItems: Item[] = [
   {
     id: 'chick-black',
-    name: 'Black Chicken',
+    name: 'Black',
     icon: '/hen-skin/hen_skin_black_recolor.svg',
   },
   {
     id: 'chick-brown',
-    name: 'Brown Chicken',
+    name: 'Brown',
     icon: '/hen-skin/hen_skin_brown_recolor.svg',
   },
   {
     id: 'chick-pirate',
-    name: 'Pirate Chicken',
+    name: 'Pirate',
     icon: '/hen-skin/hen_skin_pirate.svg',
   },
   {
     id: 'chick-wyan-black',
-    name: 'Wyan Black Chicken',
+    name: 'Black Wyan',
     icon: '/hen-skin/hen_skin_wyandotte_black.svg',
   },
   {
     id: 'chick-wyan',
-    name: 'Wyan Chicken',
+    name: 'Wyandotte',
     icon: '/hen-skin/hen_skin_wyandotte_normal.svg',
+  },
+  {
+    id: 'chick-emo',
+    name: 'Emo',
+    icon: '/hen-skin/hen_skin_emo.svg',
+  },
+  {
+    id: 'chick-rainbow',
+    name: 'Rainbow',
+    icon: '/hen-skin/hen_skin_rainbow.svg',
+  },
+  {
+    id: 'chick-red-star',
+    name: 'Red Star',
+    icon: '/hen-skin/hen_skin_red_star.svg',
+  },
+  {
+    id: 'chick-ski',
+    name: 'Ski Mask',
+    icon: '/hen-skin/hen_skin_ski_mask.svg',
   },
 ];

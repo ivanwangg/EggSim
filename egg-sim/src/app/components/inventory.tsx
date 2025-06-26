@@ -87,7 +87,7 @@ export default function Inventory({ onClose }: InventoryProps) {
                         Are you sure you want to remove
                         <br />
                         <span className="text-red-500">
-                          {itemToRemove?.name}
+                          {itemToRemove?.name} Chicken
                         </span>
                         <br />
                         from your collection?
