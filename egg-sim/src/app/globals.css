@@ -38,12 +38,19 @@ body {
   color: #FFFFFF;
 }
 
+
+
 .bg-faq {
   background-color: #fef9c3;
 }
 
 
-
+@font-face {
+  font-family: 'LogoFont';
+  src: url('/fonts/logo_font.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 
 @keyframes jumpLand {
@@ -579,5 +586,6 @@ button.no-hover:hover {
 .spatula-animation {
   animation: poofIn 1s ease-in-out, spatulaMove 1s ease-in-out, spatulaFlipUp 0.5s ease-in-out 1s forwards;
 }
+
 
 

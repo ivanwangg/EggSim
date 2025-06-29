@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "./components/navBar";
 import ClientProvider from "./ClientProvider";
 import ScrollManager from "./components/scrollManager";  // Import the ScrollManager component
+import MusicPlayer from "./components/musicplayer";
 
 
 const geistSans = Geist({
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
   description: "Created by Ivan Wang, Evan Lin, and Jayden Chen",
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,14 +38,16 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen `}>
+        
         <NavBar />
         <ClientProvider>
           <ScrollManager /> 
-          <main className="flex-1 mt-[5rem]">
+          <main className=" flex-1 border-6 border-[#C89F77]">
             {children}  
           </main>
         </ClientProvider>
+        <MusicPlayer />
       </body>
     </html>
   );

@@ -14,7 +14,9 @@ export default function NavButton( { name, route }: NavButtonProps) {
   const state = pathname === route
 
   return (
-    <button className={`font-medium text-xl px-6 py-0.5 mx-8 rounded-xl ${state ? "text-black bg-amber-50" : "text-white hover:bg-amber-50 hover:text-black"}`} onClick={() => router.push(route)}>
+    <button className={`font-medium text-xl px-6 py-1 mx-0.5 rounded-xl 
+            ${state ? "text-white bg-[#C89F77]" : "text-black hover:bg-[#C89F77] hover:text-black"}`} 
+            onClick={() => router.push(route)}>
       {name}
     </button>
   )
