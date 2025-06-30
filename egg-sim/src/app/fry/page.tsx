@@ -1,7 +1,22 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
+import { ChevronRight } from 'lucide-react';
+
+import StepSlider from '../components/fry/stepSlider';
+import FryItemDisplay from '../components/fry/fryItemDisplay';
+import useIntroSequence from '../components/fry/hooks/useIntroSequence';
+import useStepSequence from '../components/fry/hooks/useStepSequence';
+import useSliderPrompt from '../components/fry/hooks/useSliderPrompt';
+import useCookingSequence from '../components/fry/hooks/useCookingSequence';
+import useSeasoningSequence from '../components/fry/hooks/useSeasoningSequence';
+import useResultReveal from '../components/fry/hooks/useResultReveal';
+import useResultTyping from '../components/fry/hooks/useResultTypewriter';
+import useFlipSequence from '../components/fry/hooks/useFlipSequence';
+import EggSequence from '../components/fry/eggSequence';
+import SeasoningShake from '../components/fry/seasoningSequence';
+import EggResult from '../components/fry/eggResult';
 
 export default function FryPage() {
   const [step, setStep] = useState(0);
@@ -37,6 +52,7 @@ export default function FryPage() {
 =======
 >>>>>>> 1a14542 (Fix duplicate code)
 
+<<<<<<< HEAD
   //step 3
 
 <<<<<<< HEAD
@@ -45,38 +61,33 @@ export default function FryPage() {
 =======
 >>>>>>> 29e7492 (Set up Prettier and Linting)
   //egg intro portion
+=======
+  // step 3 (slider cooking portion )
+>>>>>>> 0271115 (separated the fry page into various components, to make it easier to navigate. Also implemented a next button for a sequential progression instead of continous)
   const [showEggSlam, setShowEggSlam] = useState(false);
   const [showEggCracked, setShowEggCracked] = useState(false);
   const [showEggPoof, setShowEggPoof] = useState(false);
   const [startAnimation, setStartAnimation] = useState(false);
-  const [animationKey, setAnimationKey] = useState(0); // allow for the egg crack yolk animation happen again if you click the back button
-
-  //oil intro portion
+  const [animationKey, setAnimationKey] = useState(0);
   const [showOilPourSprite, setShowOilPourSprite] = useState(false);
-
-  //egg flipping portion
   const [flipIntro, setFlipIntro] = useState(false);
-  const [showResult, setShowResult] = useState(false); // to show the result SVG
-  const [resultSVG, setResultSVG] = useState(''); // store the final egg result SVG path
-
-  //spatula movement portion
+  const [showResult, setShowResult] = useState(false);
+  const [resultSVG, setResultSVG] = useState('');
   const [isSpatulaMove, setIsSpatulaMove] = useState(false);
   const [flipIndex, setFlipIndex] = useState(0);
   const [flipCount, setFlipCount] = useState(0);
-
   const [isSpatulaDone, setIsSpatulaDone] = useState(false);
-  //results section
   const [typedTitle, setTypedTitle] = useState('');
   const [typedDescription, setTypedDescription] = useState('');
 
-  // seasoning section
+  // seasoning portion (end of cooking sequence)
   const [startSeasoningIntro, setStartSeasoningIntro] = useState(false);
   const [showSaltShaker, setShowSaltShaker] = useState(false);
   const [showSaltTable, setShowSaltTable] = useState(true);
   const [showPepperShaker, setShowPepperShaker] = useState(false);
   const [showPepperTable, setShowPepperTable] = useState(true);
+  const [showNextCookingButton, setShowNextCookingButton] = useState(false);
 
-  // this will be the cooking instructions. Temporarily using placeholder for the non edge cases. Plan to make less than 1 minute the only edge case in the future.
   function getInstructionForTime(time: number) {
     if (time < 1) {
       return ' Selecting less than 1 minute is not recommended because the egg will not cook properly. It might be unsafe to eat and texture will be unpleasant.';
@@ -85,76 +96,98 @@ export default function FryPage() {
     }
   }
 
-  // show egg and first prompt when page loads
-  useEffect(() => {
-    setIsEggVisible(true);
+  useIntroSequence(setIsEggVisible, setIsPromptVisible, setStep);
 
-    const showPrompt = setTimeout(() => {
-      setIsPromptVisible(true);
-    }, 2000);
+  useStepSequence(
+    step,
+    setStep,
+    setShowPanSVG,
+    setShowOilSVG,
+    setShowSpatulaSVG,
+    setShowSaltSVG,
+    setShowPepperSVG,
+    setShowFinalItems,
+    setIsZoomed,
+    setShowStep2Prompt,
+    setShowSlider
+  );
 
-    const step1ToStep2 = setTimeout(() => {
-      setIsPromptVisible(false);
-      setStep(1);
-    }, 6000);
+  useSliderPrompt({
+    showSlider,
+    cookTime,
+    clickedNext,
+    setShowNextButton,
+    setTypedText,
+    setClickedNext,
+    setShowBackButton,
+  });
 
-    return () => {
-      clearTimeout(showPrompt);
-      clearTimeout(step1ToStep2);
-    };
-  }, []);
+  const { handleNextCookingStep } = useCookingSequence({
+    clickedNext,
+    cookTime,
+    setTypedText,
+    indexRef,
+    setClickedNext,
+    setShowBackButton,
+    setShowOilBottle,
+    setShowOilPourSprite,
+    setIsEggVisible,
+    setShowEggSlam,
+    setShowEggPoof,
+    setShowEggCracked,
+    setStartAnimation,
+    setIsSpatulaMove,
+    setFlipIntro,
+    setShowResult,
+    setResultSVG,
+    getInstructionForTime,
+    setShowNextCookingButton,
+    setStartSeasoningIntro, // start seasoning after last cooking step
+  });
 
-  // transition through step 1 ingredients
-  useEffect(() => {
-    let next: ReturnType<typeof setTimeout>;
+  const { handleNextSeasoningStep } = useSeasoningSequence({
+    startSeasoningIntro,
+    setTypedText,
+    indexRef,
+    setShowSaltTable,
+    setShowSaltShaker,
+    setShowPepperTable,
+    setShowPepperShaker,
+    setShowResult,
+    setShowNextCookingButton, // reuse the same next button for seasoning
+  });
 
-    if (step === 1) {
-      setShowPanSVG(true);
-      next = setTimeout(() => setStep(3), 4000);
-    } else if (step === 3) {
-      setShowPanSVG(false);
-      setShowOilSVG(true);
-      next = setTimeout(() => setStep(4), 4000);
-    } else if (step === 4) {
-      setShowOilSVG(false);
-      setShowSpatulaSVG(true);
-      next = setTimeout(() => setStep(5), 4000);
-    } else if (step === 5) {
-      setShowSpatulaSVG(false);
-      setShowSaltSVG(true);
-      next = setTimeout(() => setStep(6), 4000);
-    } else if (step === 6) {
-      setShowSaltSVG(false);
-      setShowPepperSVG(true);
-      next = setTimeout(() => {
-        setStep(7);
-        setShowPepperSVG(false);
-        setShowFinalItems(true);
-      }, 4000);
-    } else if (step === 7) {
-      setIsZoomed(true);
-      const promptTimeout = setTimeout(() => {
-        setShowStep2Prompt(true);
-        const sliderTimeout = setTimeout(() => {
-          setShowSlider(true);
-        }, 2000);
-        return () => clearTimeout(sliderTimeout);
-      }, 2000);
-      return () => clearTimeout(promptTimeout);
-    }
+  useFlipSequence({
+    flipIntro,
+    cookTime,
+    flipCount,
+    flipIndex,
+    showEggCracked,
+    setFlipCount,
+    setFlipIndex,
+    setIsSpatulaDone,
+    setIsSpatulaMove,
+    setStartSeasoningIntro,
+    setAnimationKey,
+    setStartAnimation,
+    setShowEggCracked,
+  });
 
-    return () => {
-      if (next) clearTimeout(next);
-    };
-  }, [step]);
+  useResultReveal({
+    showResult,
+    cookTime,
+    setResultSVG,
+    setShowBackButton,
+  });
 
-  // show 'go fry' button after slider appears
-  useEffect(() => {
-    if (!showSlider) {
-      setShowNextButton(false);
-      return;
-    }
+  useResultTyping({
+    showResult,
+    cookTime,
+    setTypedTitle,
+    setTypedDescription,
+  });
 
+<<<<<<< HEAD
     if (!clickedNext) {
       const timer = setTimeout(() => {
         setShowNextButton(true);
@@ -335,11 +368,13 @@ export default function FryPage() {
 =======
 >>>>>>> 1a14542 (Fix duplicate code)
   // go fry button
+=======
+>>>>>>> 0271115 (separated the fry page into various components, to make it easier to navigate. Also implemented a next button for a sequential progression instead of continous)
   function handleNextClick() {
     setClickedNext(true);
     setShowNextButton(false);
   }
-  // back button for when you click less than a minute or more than 10 minutes.
+
   function handleBackClick() {
     setClickedNext(false);
     setTypedText('');
@@ -360,6 +395,7 @@ export default function FryPage() {
     setShowPepperTable(true);
   }
 
+<<<<<<< HEAD
   useEffect(() => {
     if (showEggCracked) {
       const timer = setTimeout(() => {
@@ -603,6 +639,8 @@ export default function FryPage() {
     typeTitle();
   }, [showResult, cookTime]);
 
+=======
+>>>>>>> 0271115 (separated the fry page into various components, to make it easier to navigate. Also implemented a next button for a sequential progression instead of continous)
   return (
     <div
       className={`relative w-full h-screen bg-yellow-50 flex items-center justify-center flex-col overflow-hidden transition-transform duration-[3000ms] ease-in-out ${
@@ -621,7 +659,6 @@ export default function FryPage() {
       }`}
 >>>>>>> 1a14542 (Fix duplicate code)
       style={{
-        // camera pans to the right when you click the fry, so we can see actual cooking closer
         transformOrigin:
           isZoomed || (clickedNext && cookTime) ? '100% center' : 'center',
         backgroundImage: 'url(/kitchen_background.svg)',
@@ -638,16 +675,6 @@ export default function FryPage() {
         <div className="absolute inset-0 z-40 backdrop-blur-sm bg-black/20 pointer-events-none" />
       )}
 
-      {/* Step 1 prompt*/}
-      {isPromptVisible && (
-        <div className="step1-prompt">
-          <h1 className="text-2xl font-bold glow-effect2 zoom-in-out mb-120 pixelated-text">
-            Step 1. The things you need for frying an egg
-          </h1>
-        </div>
-      )}
-
-      {/* Egg slide down*/}
       {isEggVisible && (
         <div className="absolute top-[45.8%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-12">
           <div className="egg-slide">
@@ -656,41 +683,36 @@ export default function FryPage() {
         </div>
       )}
 
-      {/* Necessary items section*/}
-      {(step === 1 || step === 3 || step === 4 || step === 5 || step === 6) && (
-        <h1 className="text-2xl font-bold glow-effect2 zoom-in-out mb-120 pixelated-text">
-          {step === 1
-            ? '1. A frying pan'
-            : step === 3
-              ? '2. Some oil'
-              : step == 4
-                ? '3. A spatula'
-                : step == 5
-                  ? '4. A salt shaker'
-                  : '5. A pepper shaker'}
-        </h1>
-      )}
-      {showPanSVG && (
-        <div className="pulse-glow absolute top-[30%] z-15">
-          <div className="poof-in">
-            <Image
-              src="/pan_topview.svg"
-              alt="Frying Pan"
-              width={180}
-              height={180}
-            />
-          </div>
-        </div>
-      )}
+      <FryItemDisplay
+        isPromptVisible={isPromptVisible}
+        step={step}
+        showPanSVG={showPanSVG}
+        showOilSVG={showOilSVG}
+        showSpatulaSVG={showSpatulaSVG}
+        showSaltSVG={showSaltSVG}
+        showPepperSVG={showPepperSVG}
+        showFinalItems={showFinalItems}
+        showOilBottle={showOilBottle}
+        showOilPourSprite={showOilPourSprite}
+        showSpatulaPan={showSpatulaPan}
+        isSpatulaDone={isSpatulaDone}
+        showSaltTable={showSaltTable}
+        showSaltShaker={showSaltShaker}
+        showPepperTable={showPepperTable}
+        showPepperShaker={showPepperShaker}
+      />
 
-      {showOilSVG && (
-        <div className="pulse-glow absolute top-[30%] left-[46.5%] z-15">
-          <div className="poof-in">
-            <Image src="/oil_bottle.svg" alt="Oil" width={180} height={180} />
-          </div>
-        </div>
-      )}
+      <StepSlider
+        cookTime={cookTime}
+        setCookTime={setCookTime}
+        clickedNext={clickedNext}
+        showSlider={showSlider}
+        showNextButton={showNextButton}
+        onNextClick={handleNextClick}
+        showStep2Prompt={showStep2Prompt}
+      />
 
+<<<<<<< HEAD
       {showSpatulaSVG && (
         <div className="pulse-glow absolute top-[30%] z-50">
           <div className="poof-in">
@@ -830,6 +852,8 @@ export default function FryPage() {
       )}
 
       {/* Typewriter instructions for cooking time */}
+=======
+>>>>>>> 0271115 (separated the fry page into various components, to make it easier to navigate. Also implemented a next button for a sequential progression instead of continous)
       {typedText && clickedNext && (
         <div
           className="absolute top-[32%] left-[64%] w-[20%] p-4 rounded-md font-mono z-30 pixelated-text bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2"
@@ -839,151 +863,51 @@ export default function FryPage() {
         </div>
       )}
 
-      {/* The go fry button for when you want to choose selected time (next button)  */}
-      {showNextButton && (
+      {showNextCookingButton && (
         <button
-          className="absolute top-[52%] left-[66.5%] z-50 bg-yellow-500 hover:bg-orange-700 text-cream-100 font-cursive font-semibold py-2 px-5 rounded-lg shadow-md shadow-orange-400/50 border-2 border-yellow-800 transition-transform active:scale-95 fry-button pixelated-text"
-          onClick={handleNextClick}
+          className="absolute top-[48.5%] left-[80%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2 pixelated-text"
+          onClick={() => {
+            if (startSeasoningIntro) {
+              handleNextSeasoningStep();
+            } else {
+              handleNextCookingStep();
+            }
+          }}
         >
-          Go fry 🍳
+          <ChevronRight className="text-white w-3 h-3" />
         </button>
       )}
 
-      {/* Back button for going back */}
       {showBackButton && (
         <button
-          className="absolute top-[62%] left-[72%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2 pixelated-text"
+          className="absolute top-[60%] left-[72.2%] z-50 text-white font-bold py-2 px-5 rounded-lg shadow-md transition-transform active:scale-95 bg-white/10 backdrop-blur-sm border border-white/20 glow-effect2 pixelated-text"
           onClick={handleBackClick}
         >
           Back
         </button>
       )}
 
-      {showOilPourSprite && (
-        <div className=" absolute top-[50%] left-[73%] poof-in">
-          <div className="absolute top-[50%] left-[73%] z-0 w-[56px] h-[64px] oil-pour-animation" />
-        </div>
-      )}
+      <EggSequence
+        showOilPourSprite={showOilPourSprite}
+        showEggSlam={showEggSlam}
+        showEggPoof={showEggPoof}
+        showEggCracked={showEggCracked}
+        startAnimation={startAnimation}
+        animationKey={animationKey}
+        isSpatulaMove={isSpatulaMove}
+      />
 
-      {showEggSlam && (
-        <div className="absolute top-[50%] left-[60%] z-50 animate-egg-slam">
-          <Image src="/egg.svg" alt="Egg Slam" width={40} height={40} />
-        </div>
-      )}
+      <SeasoningShake
+        showSaltShaker={showSaltShaker}
+        showPepperShaker={showPepperShaker}
+      />
 
-      {showEggPoof && (
-        <div className="absolute top-[50%] left-[60%] z-50 egg-poof-out">
-          <Image
-            src="/fry/eggshell_cracked_together.svg"
-            alt="Poof Effect"
-            width={40}
-            height={40}
-          />
-        </div>
-      )}
-
-      {showEggCracked && (
-        <div className="absolute top-[50%] left-[75%] rotate-90 z-50">
-          <Image
-            src="/fry/eggshell_cracked_together.svg"
-            alt="Poof Effect"
-            width={40}
-            height={40}
-          />
-        </div>
-      )}
-
-      {startAnimation && (
-        <div key={animationKey} className="absolute top-[48%] left-[74%] z-0">
-          <div className="w-20 h-20 transform animated-egg-sequence" />
-        </div>
-      )}
-
-      {isSpatulaMove && (
-        <div
-          className="absolute top-[48.5%] left-[73%] z-0 spatula-animation"
-          style={{ transform: 'rotate(0deg)' }}
-        >
-          <Image
-            src="/spatula_sideview.svg"
-            alt="Side Spatula"
-            width={180}
-            height={180}
-          />
-        </div>
-      )}
-
-      {/* Egg Flip Animation */}
-      {isSpatulaMove && (
-        <div className="absolute top-[58%] left-[75%] z-0 wrapper">
-          <div className="flip-element">
-            <Image
-              src="/fry/egg_cracked.svg"
-              alt="Flipping Egg"
-              width={40}
-              height={40}
-            />
-          </div>
-        </div>
-      )}
-      {/* seasoning shake animation */}
-      {showSaltShaker && (
-        <div
-          className="absolute top-[50%] left-[75.5%] z-10 rotate-shake poof-in"
-          style={{
-            transformOrigin: 'center top',
-            transition: 'transform 0.5s ease-in-out',
-          }}
-        >
-          <Image
-            src="/fry/salt_shaker.svg"
-            alt="Salt Shaker"
-            width={30}
-            height={30}
-          />
-        </div>
-      )}
-
-      {showPepperShaker && (
-        <div
-          className="absolute top-[50%] left-[75.5%] z-10 rotate-shake poof-in" // going to add a conditional in the future to make sure poof in effects work with rotate shake
-          style={{
-            transformOrigin: 'center top',
-            transition: 'transform 0.5s ease-in-out',
-          }}
-        >
-          <Image
-            src="/fry/pepper_shaker.svg"
-            alt="Pepper Shaker"
-            width={30}
-            height={30}
-          />
-        </div>
-      )}
-
-      {showResult && (
-        <div className="absolute top-[25%] left-[70%] z-50 zoom-in-out pulse-glow">
-          <div className="slam">
-            <Image
-              src={resultSVG || '/fry/egg_cracked.svg'}
-              alt="Final Egg Result"
-              width={200}
-              height={200}
-            />
-          </div>
-        </div>
-      )}
-
-      {showResult && (
-        <div className="absolute top-[45%] left-[75%]  transform -translate-x-1/2 z-50 text-center max-w-[250px]">
-          <p className="text-lg font-extrabold text-yellow-200 glow-effect pixelated-text">
-            {typedTitle}
-          </p>
-          <p className="text-xs font-semibold text-white pixelated-text backdrop-blur-md bg-black/40 p-3 mt-2 rounded-lg shadow-lg leading-snug whitespace-pre-line">
-            {typedDescription}
-          </p>
-        </div>
-      )}
+      <EggResult
+        showResult={showResult}
+        resultSVG={resultSVG}
+        typedTitle={typedTitle}
+        typedDescription={typedDescription}
+      />
     </div>
   );
 }
