@@ -54,7 +54,7 @@ export default function NavBar() {
         */}
         {/* new logo stuff */}
         <div className="flex items-center flex-row">
-            <img src="logo/logo_mascot.svg" className="absolute top-3 ml-1 w-16 h-16"></img>
+            <img src="logo/logo_mascot.svg" className="absolute top-3 ml-1 w-16 h-16" ></img>
 
             <div className="text-[32px] ml-1" style={{ fontFamily: 'LogoFont'}}> 
             {/* Egg */}
