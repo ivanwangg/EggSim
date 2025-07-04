@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { Item, allItems } from '../types/Item';
 import { useInventory } from '../context/InventoryContext';
+import { useBalance } from '../context/BalanceContext';
 
 interface SpinnerProps {
   costPerSpin: number;
@@ -22,6 +23,7 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
   const [displayItems, setDisplayItems] = useState<Item[]>([]);
   const [spinPosition, setSpinPosition] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const { balance, setBalance } = useBalance();
   const spinningRef = useRef(false);
 
   const { addItem } = useInventory();
@@ -58,6 +60,7 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
     setSpinning(true);
     setWinner(null);
     setShowWinner(false);
+    setBalance(balance - 1);
 
     const newItems = Array(10)
       .fill(null)
@@ -117,7 +120,17 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
           isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
         }`}
       >
-        <div className="flex flex-col items-center gap-6 w-full mt-20">
+        <div className="w-[20rem] flex flex-row justify-center items-center my-8">
+          <p className="font-bold text-2xl">Available Coins: {balance}</p>
+          <Image
+            src="/spinner/coin.svg"
+            alt="coin"
+            width={40}
+            height={40}
+            className="object-contain"
+          />
+        </div>
+        <div className="flex flex-col items-center gap-6 w-full">
           <div className="relative w-full max-w-md h-32 bg-gray-100 rounded-xl border-4 border-amber-400 overflow-hidden">
             <div className="flex h-full items-center">
               {visibleItems.map((item, index) => (
@@ -150,13 +163,14 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
 
           <button
             onClick={spin}
-            disabled={spinning}
+            disabled={spinning || balance <= 0 || winner !== null}
             className={`px-6 py-3 rounded-lg font-bold text-lg flex items-center gap-2
               ${
                 spinning
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-amber-500 hover:bg-amber-600 text-white'
               }
+              ${balance <= 0 ? 'no-hover' : ''}
               transition-colors duration-400
             `}
           >
@@ -181,13 +195,13 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
               </>
             ) : (
               <>
-                Spin {costPerSpin}
+                {balance <= 0 ? 'Insufficient Funds' : `Spin ${costPerSpin}`}
                 <Image
                   src="/spinner/coin.svg"
                   alt="coin"
                   width={40}
                   height={40}
-                  className="object-contain -mr-3 -ml-1"
+                  className="object-contain -mr-3 -ml-2"
                 />
               </>
             )}
@@ -206,7 +220,6 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
                 {winner.name || winner.id} Chicken
               </div>
             </div>
-
             <Image
               src={winner.icon || DEFAULT_ITEM.icon}
               alt={winner.name || winner.id}
@@ -227,12 +240,11 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
           </div>
         )}
 
-        {/* Return button */}
         {!spinning && (
           <button
             className="w-[10rem] h-[5rem] mt-10 bg-blue-200"
             onClick={handleClose}
-            disabled={spinning}
+            disabled={winner !== null}
           >
             Return
           </button>

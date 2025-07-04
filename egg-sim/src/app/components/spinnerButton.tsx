@@ -16,12 +16,14 @@ export default function SpinnerButton({ setOpenMenu }: SpinnerButtonProps) {
     >
       <Image
         src={
-          isSlotHovered ? '/spinner/coin_slot1.svg' : '/spinner/coin_slot0.svg'
+          isSlotHovered
+            ? '/spinner/coin_slot_v3_1.svg'
+            : '/spinner/coin_slot_v3_0.svg'
         }
         alt=""
         width={75}
         height={75}
-        className={`scale-115 ml-2`}
+        className={`scale-135 ml-1`}
       />
       <button
         className="absolute inset-0 w-full h-full no-hover"
