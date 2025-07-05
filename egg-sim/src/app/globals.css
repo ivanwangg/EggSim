@@ -410,7 +410,7 @@ button.no-hover:hover {
   border-radius: 50%;
   background: radial-gradient(circle, #ff6600 0%, #ffcc00 80%, #ffaa00 100%);
   box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
-  transition: box-shadow 0.2s ease;
+  transition: drop-shadow 0.2s ease;
 }
 
 .flame-slider::-webkit-slider-thumb:hover {
@@ -538,6 +538,10 @@ button.no-hover:hover {
   }
 }
 
+<<<<<<< HEAD
+=======
+/* vertical movement for egg flipping*/
+>>>>>>> cbaef40 (beginning portion before instruction for boil page done)
 @keyframes moveUpAndDown {
   0%, 100% {
     transform: translateY(0);
@@ -589,3 +593,35 @@ button.no-hover:hover {
 
 
 
+<<<<<<< HEAD
+=======
+
+// boil page styles (same as fry, but blue)
+boil-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%; 
+  background: radial-gradient(circle, #007acc 0%, #005f99 80%, #004080 100%);
+  drop-shadow: 0 0 10px rgba(0, 85, 255, 0.8); 
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.boil-slider::-moz-range-thumb {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%; 
+  background: radial-gradient(circle, #007acc 0%, #005f99 80%, #004080 100%);
+  drop-shadow: 0 0 10px rgba(0, 85, 255, 0.8); 
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.boil-slider::-webkit-slider-thumb:hover {
+  drop-shadow: 0 0 20px rgba(0, 85, 255, 1); 
+}
+
+.boil-slider::-moz-range-thumb:hover {
+  drop-shadow: 0 0 20px rgba(0, 85, 255, 1); 
+}
+>>>>>>> cbaef40 (beginning portion before instruction for boil page done)
