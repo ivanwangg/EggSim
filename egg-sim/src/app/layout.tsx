@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2534ce6 (Pulled from main and resolved merge conflicts)
 import { Geist, Geist_Mono } from "next/font/google";
 import { Metadata } from "next";
 import "./globals.css";
@@ -7,6 +10,7 @@ import ClientProvider from "./ClientProvider";
 import ScrollManager from "./components/scrollManager";  // Import the ScrollManager component
 import MusicPlayer from "./components/musicplayer";
 
+<<<<<<< HEAD
 =======
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Metadata } from 'next';
@@ -15,6 +19,8 @@ import NavBar from './components/navBar';
 import ClientProvider from './ClientProvider';
 import ScrollManager from './components/scrollManager'; // Import the ScrollManager component
 >>>>>>> 29e7492 (Set up Prettier and Linting)
+=======
+>>>>>>> 2534ce6 (Pulled from main and resolved merge conflicts)
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -47,6 +53,7 @@ export default function RootLayout({
         />
       </head>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen `}>
         
 =======
@@ -54,6 +61,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen text-black`}
       >
 >>>>>>> 87a4ddf (Changed text color to black)
+=======
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen `}>
+        
+>>>>>>> 2534ce6 (Pulled from main and resolved merge conflicts)
         <NavBar />
         <ClientProvider>
           <ScrollManager /> 

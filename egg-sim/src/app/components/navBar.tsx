@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import NavButton from './navButton';
 
+<<<<<<< HEAD
 
 
 export default function NavBar() {
@@ -27,6 +28,19 @@ export default function NavBar() {
         />
 
 >>>>>>> 29e7492 (Set up Prettier and Linting)
+=======
+
+
+export default function NavBar() {
+// bg-[#C89F77]
+  return (
+    <nav className="fixed top-1 w-full z-50 bg-transparent px-5 py-8 flex items-center justify-between">
+
+
+        {/* old logo stuff
+        <img src="logo/logo_mascot.svg" className="w-[5rem] h-[5rem] mx-2 px-2"
+        
+>>>>>>> 2534ce6 (Pulled from main and resolved merge conflicts)
         <div className="w-full font-bold text-2xl text-white">
           <Image
             src="logo/logo_text_only.svg"

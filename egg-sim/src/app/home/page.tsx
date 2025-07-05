@@ -76,6 +76,7 @@ export default function HomePage() {
 
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
       /* Background */
     <div 
       className="relative w-full h-screen overflow-x-hidden" 
@@ -84,6 +85,8 @@ export default function HomePage() {
                 backgroundPosition: 'center', 
                 minHeight: '100vh' }}>
 =======
+=======
+>>>>>>> 2534ce6 (Pulled from main and resolved merge conflicts)
     <div
       className="relative w-full h-screen overflow-x-hidden"
       style={{
@@ -93,7 +96,19 @@ export default function HomePage() {
         minHeight: '100vh',
       }}
     >
+<<<<<<< HEAD
 >>>>>>> 29e7492 (Set up Prettier and Linting)
+=======
+=======
+      /* Background */
+    <div 
+      className="relative w-full h-screen overflow-x-hidden" 
+      style={{ backgroundImage: 'url(/farm_background_simple_v6.svg)', 
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center', 
+                minHeight: '100vh' }}>
+>>>>>>> e536619 (Made the nav bar trasparent, updated farm background, updated logo, and background music)
+>>>>>>> 2534ce6 (Pulled from main and resolved merge conflicts)
       <XPBar></XPBar>
       {/* <button className="absolute mt-[10rem] w-[10rem] h-[5rem] bg-red-500" onClick={() => gainXP(10)}>
         click me
