@@ -7,9 +7,11 @@ import { useRouter } from 'next/navigation';
 // import { useXP } from '../context/XPContext';
 // import { useInventory } from '../context/InventoryContext';
 import BackpackButton from '../components/backpackButton';
+import Spinner from '../components/spinner';
 
 import XPBar from '../components/xpBar';
 import Inventory from '../components/inventory';
+import SpinnerButton from '../components/spinnerButton';
 
 export default function HomePage() {
   const router = useRouter();
@@ -21,10 +23,10 @@ export default function HomePage() {
   const [showOptions, setShowOptions] = useState(false);
   const [eggJumpFinished, setEggJumpFinished] = useState(false);
   const [showPrompt, setShowPrompt] = useState(false);
-  // const [isBackpackHovered, setIsBackpackHovered] = useState(false);
 
   // const { currentXP, maxXP, level, setCurrentXP, setCurrentLevel } = useXP();
   const [openInventory, setOpenInventory] = useState(false);
+  const [openSpinner, setOpenSpinner] = useState(false);
 
   // const gainXP = (val: number) => {
   //   if (currentXP + val >= 100) {
@@ -88,10 +90,16 @@ export default function HomePage() {
       {/* <button className="absolute mt-[10rem] w-[10rem] h-[5rem] bg-red-500" onClick={() => gainXP(10)}>
         click me
       </button> */}
-      <BackpackButton setOpenInventory={() => setOpenInventory(true)} />
-      {openInventory && (
-        <Inventory onClose={() => setOpenInventory(false)}></Inventory>
-      )}
+      <div className=" w-[7rem] flex flex-col justify-center items-center mt-40 ml-3">
+        <BackpackButton setOpenInventory={() => setOpenInventory(true)} />
+        {openInventory && (
+          <Inventory onClose={() => setOpenInventory(false)}></Inventory>
+        )}
+        <SpinnerButton setOpenMenu={() => setOpenSpinner(true)} />
+        {openSpinner && (
+          <Spinner costPerSpin={1} onClose={() => setOpenSpinner(false)} />
+        )}
+      </div>
 
       {/* Step 1  - Only visible before hen is clicked */}
       {!animationStarted && showPrompt && (
