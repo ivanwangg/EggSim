@@ -4,6 +4,7 @@ import './globals.css';
 import NavBar from './components/navBar';
 import ClientProvider from './ClientProvider';
 import ScrollManager from './components/scrollManager'; // Import the ScrollManager component
+import MusicPlayer from "./components/musicplayer"; // MusicPlayer for background music
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -17,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Egg Simulator',
-  description: 'Created by Ivan Wang, Evan Lin, and Jayden Chen',
+  description: 'Created by Ivan Wang, Evan Lin, Raymond Zheng, and Jayden Chen',
 };
 
 export default function RootLayout({
@@ -39,8 +40,9 @@ export default function RootLayout({
         <NavBar />
         <ClientProvider>
           <ScrollManager />
-          <main className="flex-1 mt-[5rem]">{children}</main>
+          <main className=" flex-1 border-6 border-[#C89F77]">{children}</main>
         </ClientProvider>
+        <MusicPlayer/>
       </body>
     </html>
   );

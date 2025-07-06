@@ -41,6 +41,14 @@ body {
   background-color: #fef9c3;
 }
 
+/* Logo font */
+@font-face {
+  font-family: 'LogoFont';
+  src: url('/fonts/04B_30__.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @keyframes jumpLand {
   0% {
     transform: translateY(20px); /* start at the original position */
@@ -630,7 +638,7 @@ button.no-hover:hover {
   animation: rotate-shake 1.5s ease-in-out forwards;
 }
 
-// boil page styles (same as fry, but blue)
+/* boil page styles (same as fry, but blue) */
 boil-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;

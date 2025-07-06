@@ -10,7 +10,7 @@ export default function SpinnerButton({ setOpenMenu }: SpinnerButtonProps) {
 
   return (
     <div
-      className="relative inline-block w-[5rem] h-[5rem] my-3"
+      className="relative inline-block w-[5rem] h-[5rem] ml-[3rem]"
       onMouseEnter={() => setIsSlotHovered(true)}
       onMouseLeave={() => setIsSlotHovered(false)}
     >

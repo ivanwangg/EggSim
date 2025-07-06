@@ -12,7 +12,7 @@ export default function BackpackButton({
 
   return (
     <div
-      className="relative inline-block w-[5rem] h-[5rem]"
+      className="relative inline-block w-[4rem] h-[5rem] ml-[3rem] mt-[3rem]"
       onMouseEnter={() => setIsBackpackHovered(true)}
       onMouseLeave={() => setIsBackpackHovered(false)}
     >

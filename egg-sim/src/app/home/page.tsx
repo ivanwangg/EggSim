@@ -80,7 +80,7 @@ export default function HomePage() {
     <div
       className="relative w-full h-screen overflow-x-hidden"
       style={{
-        backgroundImage: 'url(/farm_background_2.svg)',
+        backgroundImage: 'url(/farm_background_simple_v6.svg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '100vh',
@@ -103,14 +103,14 @@ export default function HomePage() {
 
       {/* Step 1  - Only visible before hen is clicked */}
       {!animationStarted && showPrompt && (
-        <div className="absolute top-[20%] left-[50%] transform -translate-x-1/2 text-white text-2xl font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text glow-effect bounce-effect">
+        <div className="absolute top-[35%] left-[50%] transform -translate-x-1/2 text-white text-2xl font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text glow-effect bounce-effect">
           <p>Step 1: Click the chicken to begin!</p>
         </div>
       )}
 
       {/* Step 2  - Only visible after the egg jump animation is finished */}
       {eggVisible && !eggClicked && eggJumpFinished && showPrompt && (
-        <div className="absolute top-[20%] left-[50%] transform -translate-x-1/2 text-white text-2xl font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text glow-effect bounce-effect animate__delay-2s">
+        <div className="absolute top-[35%] left-[50%] transform -translate-x-1/2 text-white text-2xl font-semibold animate__animated animate__fadeIn animate__delay-1s pixelated-text glow-effect bounce-effect animate__delay-2s">
           <p>Step 2: Click the egg!</p>
         </div>
       )}

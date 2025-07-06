@@ -2,7 +2,7 @@ import ContactCard from '../components/contactCard';
 
 export default function AboutPage() {
   return (
-    <div className="w-full h-full flex flex-col items-center bg-[#FFFBF0] overflow-auto">
+    <div className="w-full h-full flex flex-col items-center bg-[#FFFBF0] overflow-auto mt">
       <div className="w-[90%] h-[30rem] flex flex-row mt-10">
         <ContactCard
           img="hen_standing.svg"
@@ -24,6 +24,12 @@ export default function AboutPage() {
           title=""
           email=""
           description="Lead pixel artist"
+        ></ContactCard>
+        <ContactCard img="hen_standing.svg" 
+                     name="Raymond Zheng" 
+                     title="Student at Clark University" 
+                     email="rayzheng124@gmail.com" 
+                     description="Cracking reality itself, one egg at a time!"
         ></ContactCard>
       </div>
     </div>
