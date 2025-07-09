@@ -10,6 +10,7 @@ export default function MusicPlayer() {
   useEffect(() => {
     const startAudio = () => {
       if (audioRef.current && !started) {
+        audioRef.current.volume = 0.15;
         audioRef.current.play().then(() => {
           setStarted(true);
         }).catch((err) => {
