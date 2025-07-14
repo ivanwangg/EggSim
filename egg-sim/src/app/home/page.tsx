@@ -77,13 +77,15 @@ export default function HomePage() {
   };
 
   return (
+    /** Background */
     <div
       className="relative w-full h-screen overflow-x-hidden"
       style={{
         backgroundImage: 'url(/farm_background_simple_v6.svg)',
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: 'center -10px',
         minHeight: '100vh',
+        backgroundRepeat: 'no-repeat'
       }}
     >
       <XPBar></XPBar>

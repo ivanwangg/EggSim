@@ -19,8 +19,8 @@ export default function BackpackButton({
       <Image
         src={
           isBackpackHovered
-            ? '/inventory/backpack_open.svg'
-            : '/inventory/backpack.svg'
+            ? '/inventory/inventory_icon_hover.svg'
+            : '/inventory/inventory_icon_no_hover.svg'
         }
         alt=""
         width={75}

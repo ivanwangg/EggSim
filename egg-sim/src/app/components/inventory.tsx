@@ -33,73 +33,123 @@ export default function Inventory({ onClose }: InventoryProps) {
   };
 
   return (
+    
     <div className="fixed inset-0 z-50 flex flex-row justify-center items-center select-none">
+      {/** Black Background behind the Inv Ui */} 
       <div
         className={`absolute inset-0 bg-black pointer-events-none transition-opacity duration-300 ${
           isVisible ? 'opacity-70' : 'opacity-0'
         }`}
       />
+
+      {/** Inv UI */}
       <div
         className={`relative w-[90%] h-[90%] z-10 flex flex-col transform transition-all duration-300 ${
-          isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+          isVisible ? 'opacity-100 scale-90' : 'opacity-0 scale-90'
         }`}
+        //background for the whole UI
+        style={{
+          backgroundImage: 'url(/inventory/chicken_inventory_v2_taller.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center -70px',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '110vh',
+        }}
       >
-        <div className="w-full h-[5rem] flex flex-row justify-center items-center border-x-3 border-t-3 rounded-2xl border-black bg-blue-400">
-          <div className="w-[20rem] h-full flex flex-row justify-center items-center">
-            <button className="w-[7rem] font-bold" onClick={handleClose}>
+        {/** Top row */}
+        <div className="w-full h-[10rem] flex flex-row justify-center items-center bg-transparent">
+          {/** spacing */}
+          <div className="w-[20rem] h-full" />
+          {/** Collection sign */}
+          <p className="w-full h-full flex flex-row font-bold text-4xl justify-center items-center bg-transarent text-white"
+            style={{
+              backgroundImage: 'url(/inventory/heading_sign.svg)',
+              backgroundSize: '35%',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}>
+            My Collection
+          </p>
+          {/** Return button */} 
+          <div className="w-[20rem] h-full flex flex-row justify-center items-center text-white text-lg">
+            <button className="w-[10rem] font-bold relative top-[3rem] right-[5rem]" onClick={handleClose}
+              style={{
+                backgroundImage: 'url(/inventory/return_button.svg)',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                minHeight: '10vh'
+              }}>
               Return
             </button>
           </div>
-          <p className="w-full h-full flex flex-row font-bold text-2xl justify-center items-center border-x-3 rounded-2xl border-black bg-amber-300">
-            My Collection
-          </p>
-          <div className="w-[20rem] h-full" />
         </div>
-        <div className="w-full h-full flex flex-wrap justify-center items-center border-3 rounded-2xl pt-7 content-start overflow-auto bg-green-300">
-          {allItems.map((item) => {
-            const collected = items.some((i) => i.id === item.id);
 
-            return (
-              <div
-                key={item.id}
-                className={`relative w-[7rem] h-[7rem] border-2 rounded-2xl m-2 flex justify-center items-center transition-opacity ${
-                  collected
-                    ? 'bg-white border-red-400 opacity-100'
-                    : 'bg-gray-300 border-gray-400 opacity-50'
-                }`}
-              >
-                <Image
-                  src={item.icon}
-                  alt={item.name}
-                  title={item.name}
-                  className="object-contain"
-                  width={90}
-                  height={90}
-                />
-                {collected && (
-                  <>
-                    <button
-                      onClick={() => setConfirmItemId(item.id)}
-                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex justify-center items-center text-xs hover:bg-red-800"
-                      title="Remove item"
-                    >
-                      X
-                    </button>
-                    <button
-                      onClick={() => {
-                        setInfoItem(item);
-                        setOpenInfo(true);
-                      }}
-                      className="absolute top-1 left-1 bg-red-600 text-white rounded-full w-9 h-5 flex justify-center items-center text-xs hover:bg-red-800"
-                      title="Info"
-                    >
-                      Info
-                    </button>
-                  </>
-                )}
-              </div>
-            );
-          })}
+        {/** Body */}
+        
+        {/** Chicken inv */}
+        <div className="flex w-[84%] h-[70%] ml-[6rem] mt-[-1rem]">
+          <div className="w-[60%] h-full flex flex-wrap justify-center items-center content-start overflow-auto bg-transparent"
+            style={{
+              backgroundImage: 'url(/inventory/temp_inside_background.svg)',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              minHeight: '10vh'
+            }}>
+            {allItems.map((item) => {
+              const collected = items.some((i) => i.id === item.id);
+
+              return (
+                <div
+                  key={item.id}
+                  className={`relative w-[7rem] h-[7rem] border-2 rounded-2xl m-2 flex justify-center items-center transition-opacity ${
+                    collected
+                      ? 'bg-white border-red-400 opacity-100'
+                      : 'bg-gray-300 border-gray-400 opacity-50'
+                  }`}
+                  style={{
+                    backgroundImage: 'url(/inventory/slot_background.svg)',
+                    backgroundSize: '120%',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    minHeight: '10vh'
+                  }}
+                >
+                  <Image
+                    src={item.icon}
+                    alt={item.name}
+                    title={item.name}
+                    className="object-contain"
+                    width={90}
+                    height={90}
+                  />
+                  {collected && (
+                    <>
+                      <button
+                        onClick={() => setConfirmItemId(item.id)}
+                        className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex justify-center items-center text-xs hover:bg-red-800"
+                        title="Remove item"
+                      >
+                        X
+                      </button>
+                      <button
+                        onClick={() => {
+                          setInfoItem(item);
+                          setOpenInfo(true);
+                        }}
+                        className="absolute top-1 left-1 bg-red-600 text-white rounded-full w-9 h-5 flex justify-center items-center text-xs hover:bg-red-800"
+                        title="Info"
+                      >
+                        Info
+                      </button>
+                    </>
+                  )}
+                </div>
+              );  
+            })}
+          </div>
+          <div className="flex flex-row w-[40%] h-full bg-black"/> 
         </div>
         {confirmItemId && (
           <RemovalItemModal
