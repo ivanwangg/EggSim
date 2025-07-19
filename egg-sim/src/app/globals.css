@@ -49,6 +49,23 @@ body {
   font-style: normal;
 }
 
+/* Sign font */
+@font-face {
+  font-family: 'SignFont';
+  src: url('/fonts/KiwiSoda.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Description font */
+@font-face {
+  font-family: 'DescFont';
+  src: url('/fonts/Minecraft.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 @keyframes jumpLand {
   0% {
     transform: translateY(20px); /* start at the original position */
