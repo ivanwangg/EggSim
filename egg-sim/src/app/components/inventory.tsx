@@ -145,6 +145,7 @@ export default function Inventory({ onClose }: InventoryProps) {
             })}
           </div>
           {/** Description Section */}
+          {/** background */}
           <div className="flex flex-col w-[40%] mr-[2rem] h-[99%] items-center"
             style={{
               fontFamily: 'DescFont',
@@ -155,15 +156,19 @@ export default function Inventory({ onClose }: InventoryProps) {
               minHeight: '10vh',
             
             }}> 
+            {/** chicken name */}
             <div className="w-full h-[20%] pt-20 flex flex-wrap justify-center content-start overflow-auto font-bold text-5xl">
               Hello
             </div>
+            {/** chicken selfie */}
             <img src="real-chicken/brown_chicken.jpeg" className="w-75 h-[40%] mr-2 border-5" style={{ borderColor: '#D4AA8D'}}/>
+            {/** chicken desc*/}
             <div className="w-[80%] h-[40%] flex flex-wrap justify-center content-start pl-3 pt-2">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
           </div>
         </div>
+        {/** other stuff */}
         {confirmItemId && (
           <RemovalItemModal
             itemToRemove={itemToRemove}

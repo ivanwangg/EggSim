@@ -109,30 +109,48 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
     });
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center z-50 select-none">
+    //Black background stuff
+    <div className="fixed inset-0 flex justify-center items-center z-50 select-none text-white">
       <div
         className={`absolute inset-0 bg-black pointer-events-none transition-opacity duration-300 ${
           isVisible ? 'opacity-70' : 'opacity-0'
         }`}
       />
+      {/** Gacha UI */}
+      {/** Background and gacha position */}
       <div
-        className={`bg-red-200 relative w-[70%] h-[70%] z-10 flex flex-col justify-start items-center transform transition-all duration-300 ${
+        className={`relative w-[90%] h-[90%] z-10 flex flex-col justify-start items-center transform transition-all duration-300 ${
           isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
         }`}
       >
-        <div className="w-[20rem] flex flex-row justify-center items-center my-8">
-          <p className="font-bold text-2xl">Available Coins: {balance}</p>
+        {/** rows */}
+        <div className="flex flex-row justify-center items-center my-8">
+          {/** Availabe Coins */}
+          <p className="font-bold text-4xl text-white " style={{fontFamily: 'DescFont'}}>
+              Available Coins: {balance}</p>
           <Image
             src="/spinner/coin.svg"
             alt="coin"
-            width={40}
-            height={40}
-            className="object-contain"
+            width={75}
+            height={75}
+            className="object-contain -mt-3 -ml-2"
           />
         </div>
-        <div className="flex flex-col items-center gap-6 w-full">
-          <div className="relative w-full max-w-md h-32 bg-gray-100 rounded-xl border-4 border-amber-400 overflow-hidden">
-            <div className="flex h-full items-center">
+        {/** chicken spinner */}
+        <div className="flex flex-col items-center gap-6 w-full" 
+        style={{
+          WebkitMaskImage: `
+            linear-gradient(to right,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,1) 20%,
+            rgba(0,0,0,1) 80%,
+            rgba(0,0,0,0) 100%)`,
+          WebkitMaskRepeat: 'no-repeat',
+          WebkitMaskSize: '100% 100%',
+        }}>
+          <div className="relative w-full h-60 rounded-xl overflow-hidden">
+            {/** Spinning code */}
+            <div className=" flex h-full items-center">
               {visibleItems.map((item, index) => (
                 <div
                   key={`${item.id}-${index}-${spinPosition}`}
@@ -140,7 +158,8 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
                     ${index === 2 ? 'scale-110' : 'scale-90 opacity-80'}
                   `}
                 >
-                  <div className="relative w-16 h-16 flex items-center justify-center">
+                {/** Each chicken */}
+                  <div className="relative w-50 h-50 flex items-center justify-center">
                     <Image
                       src={item.icon || DEFAULT_ITEM.icon}
                       alt={item.name || item.id}
@@ -148,17 +167,18 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = DEFAULT_ITEM.icon!;
                       }}
-                      width={64}
-                      height={64}
+                      width={200}
+                      height={200}
                     />
                   </div>
-                  <div className="text-center mt-1 text-xs font-semibold">
+                  <div className="text-center mt-1 font-semibold text-xl" style={{fontFamily: 'DescFont'}}>
                     {item.name || item.id}
                   </div>
                 </div>
               ))}
             </div>
-            <div className="absolute left-1/2 top-0 transform -translate-x-1/2 w-1 h-full bg-amber-400 z-10 opacity-40"></div>
+            {/** yellow line */}
+            <div className="absolute left-1/2 top-0 transform -translate-x-1/2 w-1 h-[90%] bg-amber-400 z-10 opacity-60"></div>
           </div>
 
           <button
