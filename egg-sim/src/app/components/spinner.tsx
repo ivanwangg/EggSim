@@ -16,6 +16,7 @@ const DEFAULT_ITEM: Item = {
   icon: '/hen-skin/hen_skin_pirate.svg',
 };
 
+
 export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
   const [winner, setWinner] = useState<Item | null>(null);
   const [showWinner, setShowWinner] = useState(false);
@@ -27,6 +28,9 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
   const spinningRef = useRef(false);
 
   const { addItem } = useInventory();
+
+  const [buttonState, setButtonState] = useState<'normal' | 'hover' | 'pressed'>('normal');
+  const [redbuttonState, setRedButtonState] = useState<'normal' | 'hover' | 'pressed'>('normal');
 
   useEffect(() => {
     setIsVisible(true);
@@ -107,7 +111,7 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
       const index = (spinPosition + i) % displayItems.length;
       return displayItems[index] || DEFAULT_ITEM;
     });
-
+  
   return (
     //Black background stuff
     <div className="fixed inset-0 flex justify-center items-center z-50 select-none text-white">
@@ -119,14 +123,14 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
       {/** Gacha UI */}
       {/** Background and gacha position */}
       <div
-        className={`relative w-[90%] h-[90%] z-10 flex flex-col justify-start items-center transform transition-all duration-300 ${
+        className={`relative w-[90%] h-[90%] z-10 flex flex-col font-semibold justify-start items-center transform transition-all duration-300 ${
           isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
         }`}
       >
         {/** rows */}
         <div className="flex flex-row justify-center items-center my-8">
           {/** Availabe Coins */}
-          <p className="font-bold text-4xl text-white " style={{fontFamily: 'DescFont'}}>
+          <p className="text-4xl text-white " style={{fontFamily: 'DescFont'}}>
               Available Coins: {balance}</p>
           <Image
             src="/spinner/coin.svg"
@@ -138,6 +142,7 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
         </div>
         {/** chicken spinner */}
         <div className="flex flex-col items-center gap-6 w-full" 
+        /** fade out effect */
         style={{
           WebkitMaskImage: `
             linear-gradient(to right,
@@ -149,7 +154,7 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
           WebkitMaskSize: '100% 100%',
         }}>
           <div className="relative w-full h-60 rounded-xl overflow-hidden">
-            {/** Spinning code */}
+            {/** Spinner UI */}
             <div className=" flex h-full items-center">
               {visibleItems.map((item, index) => (
                 <div
@@ -171,7 +176,7 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
                       height={200}
                     />
                   </div>
-                  <div className="text-center mt-1 font-semibold text-xl" style={{fontFamily: 'DescFont'}}>
+                  <div className="text-center mt-1 text-xl" style={{fontFamily: 'DescFont'}}>
                     {item.name || item.id}
                   </div>
                 </div>
@@ -179,24 +184,38 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
             </div>
             {/** yellow line */}
             <div className="absolute left-1/2 top-0 transform -translate-x-1/2 w-1 h-[90%] bg-amber-400 z-10 opacity-60"></div>
-          </div>
-
+          </div >
+          {/** Spin Button  */}
           <button
             onClick={spin}
+            onMouseEnter={() => setButtonState('hover')}
+            onMouseLeave={() => setButtonState('normal')}
+            onMouseDown={() => setButtonState('pressed')}
             disabled={spinning || balance <= 0 || winner !== null}
-            className={`px-6 py-3 rounded-lg font-bold text-lg flex items-center gap-2
+            className={`w-[10rem] h-[5rem] mt-2 pl-10 pb-2 rounded-lg text-lg flex items-center gap-2 no-hover
               ${
                 spinning
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-amber-500 hover:bg-amber-600 text-white'
+                  ? 'cursor-not-allowed'
+                  : 'text-black'
               }
               ${balance <= 0 ? 'no-hover' : ''}
-              transition-colors duration-400
-            `}
+              transition-colors duration-400 
+            ` }
+            
+            /** button image UI */
+            style={{
+              backgroundImage: `url(/spinner/button_${buttonState}.svg)`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              fontFamily: 'DescFont'
+            }}
           >
+            {/** Button when clicked */}
             {spinning ? (
               <>
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <svg className="animate-spin h-5 w-5 -ml-[1rem] text-black" viewBox="0 0 24 24">
+                  
                   <circle
                     className="opacity-25"
                     cx="12"
@@ -215,26 +234,26 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
               </>
             ) : (
               <>
-                {balance <= 0 ? 'Insufficient Funds' : `Spin ${costPerSpin}`}
+                {balance <= 0 ? <span className="-ml-5"> Insufficient Funds </span>: `Spin ${costPerSpin}`}
                 <Image
                   src="/spinner/coin.svg"
                   alt="coin"
                   width={40}
                   height={40}
-                  className="object-contain -mr-3 -ml-2"
+                  className="object-contain -mr- -ml-2"
                 />
               </>
             )}
           </button>
         </div>
-
+        {/** Winner screen */}
         {winner && (
           <div
             className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-all duration-300
               ${showWinner ? 'opacity-100 scale-100' : 'opacity-0 scale-100 pointer-events-none'}
-              bg-green-200`}
+              `}
           >
-            <div className="bg-amber-100 rounded-lg p-6 text-center shadow-lg">
+            <div className="rounded-lg p-6 text-center shadow-lg">
               <div className="text-lg font-bold mb-2">You won:</div>
               <div className="text-xl font-extrabold text-amber-600">
                 {winner.name || winner.id} Chicken
@@ -259,12 +278,22 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
             </button>
           </div>
         )}
-
+        {/** return button */}
         {!spinning && (
           <button
-            className="w-[10rem] h-[5rem] mt-10 bg-blue-200"
+            className="w-[10rem] h-[5rem] mt-10 pb-3 no-hover text-black text-xl"
             onClick={handleClose}
+            onMouseEnter={() => setRedButtonState('hover')}
+            onMouseLeave={() => setRedButtonState('normal')}
+            onMouseDown={() => setRedButtonState('pressed')}
             disabled={winner !== null}
+            style={{
+              backgroundImage: `url(/spinner/red_button_${redbuttonState}.svg)`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              fontFamily: 'DescFont'
+            }}
           >
             Return
           </button>
