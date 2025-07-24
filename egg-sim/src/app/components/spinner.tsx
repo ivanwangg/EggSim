@@ -248,14 +248,29 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
         </div>
         {/** Winner screen */}
         {winner && (
+           /** background stuff */
           <div
             className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-all duration-300
               ${showWinner ? 'opacity-100 scale-100' : 'opacity-0 scale-100 pointer-events-none'}
               `}
+              style={{
+                backgroundImage: `url(/spinner/chicken_spinner_square.svg)`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                fontFamily: 'DescFont'
+              }}
           >
-            <div className="rounded-lg p-6 text-center shadow-lg">
-              <div className="text-lg font-bold mb-2">You won:</div>
-              <div className="text-xl font-extrabold text-amber-600">
+            <div className="w-[20rem] h-[10rem] pt-12 rounded-lg p-6 text-center shadow-lg"
+              style={{
+                backgroundImage: `url(/spinner/spinner_winner_sign.svg)`,
+                backgroundSize: '100%',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+              }}
+            >
+              <div className="text-xl font-bold mb-2">You won:</div>
+              <div className="text-2xl font-extrabold text-amber-600">
                 {winner.name || winner.id} Chicken
               </div>
             </div>
@@ -266,13 +281,20 @@ export default function Spinner({ costPerSpin, onClose }: SpinnerProps) {
               onError={(e) => {
                 (e.target as HTMLImageElement).src = DEFAULT_ITEM.icon!;
               }}
-              width={128}
-              height={128}
+              width={250}
+              height={250}
             />
             <button
-              className="w-[10rem] h-[5rem] mt-10 bg-blue-200"
+              className="w-[10rem] h-[5rem] mt-10 text-xl"
               onClick={handleCloseWinner}
               disabled={spinning}
+              style={{
+                backgroundImage: `url(/spinner/chicken_spinner_return_v2.svg)`,
+                backgroundSize: '115%',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                fontFamily: 'DescFont'
+              }}
             >
               Close
             </button>
