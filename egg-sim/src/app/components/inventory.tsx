@@ -33,9 +33,8 @@ export default function Inventory({ onClose }: InventoryProps) {
   };
 
   return (
-    
     <div className="fixed inset-0 z-50 flex flex-row justify-center items-center select-none">
-      {/** Black Background behind the Inv Ui */} 
+      {/** Black Background behind the Inv Ui */}
       <div
         className={`absolute inset-0 bg-black pointer-events-none transition-opacity duration-300 ${
           isVisible ? 'opacity-70' : 'opacity-0'
@@ -44,16 +43,15 @@ export default function Inventory({ onClose }: InventoryProps) {
 
       {/** Inv UI */}
       <div
-        className={`relative w-[90%] h-[90%] z-10 flex flex-col transform transition-all duration-300 ${
-          isVisible ? 'opacity-100 scale-90' : 'opacity-0 scale-90'
+        className={`relative w-full h-full z-10 flex flex-col transform transition-all duration-300 ${
+          isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
         }`}
         //background for the whole UI
         style={{
-          backgroundImage: 'url(/inventory/inv_taller_v2.svg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center -70px',
+          backgroundImage: 'url(/inventory/inv_taller_v3.svg)',
+          backgroundSize: '90% 90%',
+          backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          minHeight: '110vh',
         }}
       >
         {/** Top row */}
@@ -61,34 +59,39 @@ export default function Inventory({ onClose }: InventoryProps) {
           {/** spacing */}
           <div className="w-[20rem] h-full" />
           {/** Collection sign */}
-          <p className="w-full h-full flex flex-row text-7xl justify-center items-center bg-transarent text-white"
+          <p
+            className="w-full h-full flex flex-row text-7xl justify-center items-center bg-transarent text-white"
             style={{
               backgroundImage: 'url(/inventory/heading_sign_v3.svg)',
               backgroundSize: '50%',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-              fontFamily: 'SignFont'
-            }}>
-          Collection
+              fontFamily: 'SignFont',
+            }}
+          >
+            Collection
           </p>
-          {/** Return button */} 
+          {/** Return button */}
           <div className="w-[20rem] h-full flex flex-row justify-center items-center text-white text-4xl">
-            <button className="w-[12rem] relative top-[2rem] right-[7rem] pt-4" onClick={handleClose}
+            <button
+              className="w-[12rem] relative top-[2rem] right-[7rem] pt-4"
+              onClick={handleClose}
               style={{
                 backgroundImage: 'url(/inventory/return_button.svg)',
                 backgroundSize: '100%',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 minHeight: '10vh',
-                fontFamily: 'SignFont'
-              }}>
+                fontFamily: 'SignFont',
+              }}
+            >
               Return
             </button>
           </div>
         </div>
 
         {/** Body */}
-        
+
         {/** Chicken inv */}
         <div className="flex w-[84%] h-[70%] ml-[6rem] mt-[0rem]">
           <div className="w-[60%] h-full flex flex-wrap justify-center items-center content-start overflow-auto">
@@ -99,16 +102,14 @@ export default function Inventory({ onClose }: InventoryProps) {
                 <div
                   key={item.id}
                   className={`relative w-[7rem] h-[7rem] rounded-2xl m-2 flex justify-center items-center transition-opacity ${
-                    collected
-                      ? 'opacity-100'
-                      : 'opacity-50'
+                    collected ? 'opacity-100' : 'opacity-50'
                   }`}
                   style={{
                     backgroundImage: 'url(/inventory/slot_background_v2.svg)',
                     backgroundSize: '110%',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    minHeight: '10vh'
+                    minHeight: '10vh',
                   }}
                 >
                   <Image
@@ -141,30 +142,41 @@ export default function Inventory({ onClose }: InventoryProps) {
                     </>
                   )}
                 </div>
-              );  
+              );
             })}
           </div>
           {/** Description Section */}
           {/** background */}
-          <div className="flex flex-col w-[40%] mr-[2rem] h-[99%] items-center"
+          <div
+            className="flex flex-col w-[40%] mr-[2rem] h-[99%] items-center"
             style={{
               fontFamily: 'DescFont',
               backgroundImage: 'url(/inventory/scroll.svg)',
-              backgroundSize: '110%',
+              backgroundSize: '100%',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               minHeight: '10vh',
-            
-            }}> 
+            }}
+          >
             {/** chicken name */}
-            <div className="w-full h-[20%] pt-20 flex flex-wrap justify-center content-start overflow-auto font-bold text-5xl">
+            <div className="w-full h-[20%] pt-10 flex flex-wrap justify-center content-start overflow-hidden font-bold text-5xl">
               Hello
             </div>
             {/** chicken selfie */}
-            <img src="real-chicken/brown_chicken.jpeg" className="w-75 h-[40%] mr-2 border-5" style={{ borderColor: '#D4AA8D'}}/>
+            <img
+              src="real-chicken/brown_chicken.jpeg"
+              className="w-75 h-[40%] mr-2 border-5"
+              style={{ borderColor: '#D4AA8D' }}
+            />
             {/** chicken desc*/}
             <div className="w-[80%] h-[40%] flex flex-wrap justify-center content-start pl-3 pt-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>
           </div>
         </div>

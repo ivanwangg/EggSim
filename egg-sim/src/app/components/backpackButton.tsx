@@ -12,15 +12,15 @@ export default function BackpackButton({
 
   return (
     <div
-      className="relative inline-block w-[4rem] h-[5rem] ml-[3rem] mt-[3rem]"
+      className="relative inline-block w-[4rem] h-[5rem] ml-[2.5rem] mt-[3rem]"
       onMouseEnter={() => setIsBackpackHovered(true)}
       onMouseLeave={() => setIsBackpackHovered(false)}
     >
       <Image
         src={
           isBackpackHovered
-            ? '/inventory/inventory_icon_hover.svg'
-            : '/inventory/inventory_icon_no_hover.svg'
+            ? '/inventory/backpack_open.svg'
+            : '/inventory/backpack.svg'
         }
         alt=""
         width={75}
