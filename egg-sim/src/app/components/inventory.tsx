@@ -43,45 +43,44 @@ export default function Inventory({ onClose }: InventoryProps) {
 
       {/** Inv UI */}
       <div
-        className={`relative w-full h-full z-10 flex flex-col transform transition-all duration-300 ${
+        className={`relative w-[95%] h-[95%] z-10 flex flex-col transform transition-all duration-300 ${
           isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
         }`}
         //background for the whole UI
         style={{
           backgroundImage: 'url(/inventory/inv_taller_v3.svg)',
-          backgroundSize: '90% 90%',
+          backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
       >
         {/** Top row */}
-        <div className="w-full h-[10rem] flex flex-row justify-center items-center bg-transparent">
+        <div
+          className="w-full h-[10rem] flex flex-row justify-center items-center"
+          style={{
+            backgroundImage: 'url(/inventory/heading_sign_v3.svg)',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            fontFamily: 'SignFont',
+          }}
+        >
           {/** spacing */}
           <div className="w-[20rem] h-full" />
           {/** Collection sign */}
-          <p
-            className="w-full h-full flex flex-row text-7xl justify-center items-center bg-transarent text-white"
-            style={{
-              backgroundImage: 'url(/inventory/heading_sign_v3.svg)',
-              backgroundSize: '50%',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              fontFamily: 'SignFont',
-            }}
-          >
+          <p className="w-[40rem] h-full flex flex-row text-7xl justify-center items-center text-white">
             Collection
           </p>
           {/** Return button */}
-          <div className="w-[20rem] h-full flex flex-row justify-center items-center text-white text-4xl">
+          <div className="w-[20rem] h-full flex flex-row text-white text-4xl">
             <button
-              className="w-[12rem] relative top-[2rem] right-[7rem] pt-4"
+              className="w-[12rem] relative top-[2rem] pt-4"
               onClick={handleClose}
               style={{
                 backgroundImage: 'url(/inventory/return_button.svg)',
-                backgroundSize: '100%',
+                backgroundSize: 'contain',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                minHeight: '10vh',
                 fontFamily: 'SignFont',
               }}
             >
@@ -93,7 +92,7 @@ export default function Inventory({ onClose }: InventoryProps) {
         {/** Body */}
 
         {/** Chicken inv */}
-        <div className="flex w-[84%] h-[70%] ml-[6rem] mt-[0rem]">
+        <div className="flex flex-row justify-center items-center w-[80%] h-[60%] mx-auto">
           <div className="w-[60%] h-full flex flex-wrap justify-center items-center content-start overflow-auto">
             {allItems.map((item) => {
               const collected = items.some((i) => i.id === item.id);
@@ -101,7 +100,7 @@ export default function Inventory({ onClose }: InventoryProps) {
               return (
                 <div
                   key={item.id}
-                  className={`relative w-[7rem] h-[7rem] rounded-2xl m-2 flex justify-center items-center transition-opacity ${
+                  className={`relative w-[6rem] h-[6rem] rounded-2xl m-2 flex justify-center items-center transition-opacity ${
                     collected ? 'opacity-100' : 'opacity-50'
                   }`}
                   style={{
@@ -109,7 +108,6 @@ export default function Inventory({ onClose }: InventoryProps) {
                     backgroundSize: '110%',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    minHeight: '10vh',
                   }}
                 >
                   <Image
@@ -148,14 +146,14 @@ export default function Inventory({ onClose }: InventoryProps) {
           {/** Description Section */}
           {/** background */}
           <div
-            className="flex flex-col w-[40%] mr-[2rem] h-[99%] items-center"
+            className="flex flex-col w-[40%] h-full items-center"
             style={{
-              fontFamily: 'DescFont',
               backgroundImage: 'url(/inventory/scroll.svg)',
-              backgroundSize: '100%',
+              backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
               minHeight: '10vh',
+              fontFamily: 'DescFont',
             }}
           >
             {/** chicken name */}
