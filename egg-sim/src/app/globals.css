@@ -810,7 +810,6 @@ boil-slider::-webkit-slider-thumb {
 }
 
 .shake-animation {
-  animation: shake 1s ease-in-out infinite;
+  animation: shake 1.5s ease-in-out infinite;
 }
-
 /* end of boil page styles */
