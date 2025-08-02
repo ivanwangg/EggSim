@@ -4,7 +4,7 @@ Welcome to the EggSim repository! EggSim is an educational and interactive websi
 
 ## Features
 * Unique Animations: Fun, custom animations that bring chickens and their world to life
-* Satirical Gambling: Silly, risk-free gambling features that allow the player to gain cute in-game collectables
+* Satirical Gacha: Silly, risk-free gacha features that allow the player to gain cute in-game collectables whilst still having the mystery of not knowing what they will obtain
 * Gamified Gameplay Cycle: Learn by playing! Complete small tasks, earn rewards, and unlock new content in a fun loop
 
 ## Technologies Utilized
