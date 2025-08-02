@@ -9,6 +9,6 @@ Welcome to the EggSim repository! EggSim is an educational and interactive websi
 
 ## Technologies Utilized
 * Next.js: React framework for server-side rendering and optimized performance
-* JavaScript: Used to handle the logic, interactivity, and dynamic content of the application
+* TypeScript: Used to handle the logic, interactivity, and dynamic content of the application
 * Tailwind CSS: Utility-first CSS framework for styling
 * Git: Version control to manage and track changes in the codebase
