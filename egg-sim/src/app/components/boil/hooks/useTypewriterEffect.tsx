@@ -97,7 +97,6 @@ export default function useBoilTypewriterEffect({
       return;
     }
 
-    // WARNING PATH
     if (cookTime < 1 || cookTime > 10) {
       const warning = getInstructionForTime(cookTime);
       typeText(warning, boilStep, () => {
@@ -112,7 +111,6 @@ export default function useBoilTypewriterEffect({
       return;
     }
 
-    // NORMAL FLOW
     if (boilStep === 0) {
       typeText(boilIntro, boilStep, () => {
         setTypedText('');
@@ -126,11 +124,10 @@ export default function useBoilTypewriterEffect({
           setShowBigWaterPot(false);
           setShowBoilingPot(true);
 
-          // Insert boiledIntro text after setBackgroundStage(0)
           typeText(boiledIntro, boilStep, () => {
             setShowNextBoilButton(true);
           });
-        }, 3000); // After 3 seconds delay
+        }, 3000);
       });
     }
 
