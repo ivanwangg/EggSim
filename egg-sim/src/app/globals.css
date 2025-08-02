@@ -630,7 +630,7 @@ button.no-hover:hover {
   animation: rotate-shake 1.5s ease-in-out forwards;
 }
 
-// boil page styles (same as fry, but blue)
+/* boil page styles (same as fry, but blue) */
 boil-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
